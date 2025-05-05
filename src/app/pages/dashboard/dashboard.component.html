@@ -1,0 +1,109 @@
+<h4 class="font-medium text-[32px] leading-[100%] tracking-[0%] font-kanit">Dashboard</h4>
+<div class="p-6 pl-0 min-h-screen space-y-6">
+    <!-- Top Stats -->
+    <div class="grid grid-cols-4 gap-4">
+        <div class="bg-white p-4 rounded shadow flex items-center space-x-4">
+            <img src="assets/icons/image1.png" alt="Appointments Icon" class="w-12 h-12">
+            <div>
+                <p class="text-2xl font-bold text-gray-500">250</p>
+                <h4 class="text-lg font-semibold text-black">Total Appointments</h4>
+            </div>
+        </div>
+
+        <div class="bg-white p-4 rounded shadow flex items-center space-x-4">
+            <img src="assets/icons/image2.png" alt="Appointments Icon" class="w-12 h-12">
+            <div>
+                <p class="text-2xl font-bold text-gray-500">89</p>
+                <h4 class="text-lg font-semibold text-black">Canceled Appointments</h4>
+            </div>
+        </div>
+        <div class="bg-white p-4 rounded shadow flex items-center space-x-4">
+            <img src="assets/icons/image3.png" alt="Appointments Icon" class="w-12 h-12">
+            <div>
+                <p class="text-2xl font-bold text-gray-500">52</p>
+                <h4 class="text-lg font-semibold text-black">Pending Appointments</h4>
+            </div>
+        </div>
+        <div class="bg-white p-4 rounded shadow flex items-center space-x-4">
+            <img src="assets/icons/image4.png" alt="Appointments Icon" class="w-12 h-12">
+            <div>
+                <p class="text-2xl font-bold text-gray-500">300</p>
+                <h4 class="text-lg font-semibold text-black">Due Today</h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="grid grid-cols-3 gap-6">
+        <!-- Booked Appointments -->
+        <div class="col-span-2 bg-white rounded-3xl shadow p-4">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Booked Appointment</h2>
+                <button (click)="addBooking()" class="bg-purple-600 text-white px-4 py-1 rounded flex items-center space-x-2">
+                    <img src="assets/icons/plus.png" alt="New Booking Icon" class="w-4 h-4">
+                    <span>New Booking</span>
+                </button>
+            </div>
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="text-sm text-gray-600 bg-[#EDF4FC] ">
+                        <th class="py-2">#</th>
+                        <th>Patient Name</th>
+                        <th>Assigned Doctor</th>
+                        <th>Date</th>
+                        <th>Diseases</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm text-gray-800">
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2">01</td>
+                        <td>Ramesh Kumar</td>
+                        <td>Dr. Jacob Ryan</td>
+                        <td>12 Jan 2025</td>
+                        <td><span class="bg-red-400 text-white px-2 py-1 rounded text-xs">Fever</span></td>
+                        <td>
+                            <button class="text-gray-500 hover:text-red-500">
+                                🗑️
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Doctor's Appointments -->
+        <div class="bg-white rounded-3xl shadow p-4">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Doctors Appointments</h2>
+            </div>
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="text-sm text-gray-600 bg-[#EDF4FC]">
+                        <th class="py-2">#</th>
+                        <th>Doctor Name</th>
+                        <th>Appointments</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm text-gray-800">
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2">01</td>
+                        <td>
+                            <div class="flex items-center space-x-2">
+                                <img src="assets/profile-pic.jpg" class="rounded-full w-8 h-8" />
+                                <span>Ramesh Kumar</span>
+                            </div>
+                        </td>
+                        <td>37</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<app-booking-form 
+    *ngIf="showModal"
+    (modalClosed)="closeModal()"
+    (staffAdded)="handleBookingAdded($event)">
+</app-booking-form>

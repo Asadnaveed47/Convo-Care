@@ -1,0 +1,54 @@
+<h4 class="font-medium text-[32px] leading-[100%] tracking-[0%] font-kanit">Staff</h4>
+<div class="p-6 pl-0 min-h-screen space-y-6">
+    <div class="grid grid-cols-3 gap-6">
+        <!-- Booked Appointments -->
+        <div class="col-span-2 bg-white rounded-3xl shadow p-4">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Listing</h2>
+                <button (click)="addStaff()" class="bg-purple-600 text-white px-4 py-1 rounded flex items-center space-x-2">
+                    <img src="assets/icons/plus.png" alt="New Booking Icon" class="w-4 h-4">
+                    <span>New Staff</span>
+                </button>
+            </div>
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="text-sm text-gray-600 bg-[#EDF4FC] ">
+                        <th>Name</th>
+                        <th>Assigned Staff</th>
+                        <th>Date/Time</th>
+                        <th>Service</th>
+                        <th>Duration</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm text-gray-800">
+                    <tr class="hover:bg-gray-50">
+                        <td>Ramesh Kumar</td>
+                        <td>Dr. Jacob Ryan</td>
+                        <td>12 Jan 2025</td>
+                        <td>Consultancy</td>
+                        <td>10 Min</td>
+                       <td>
+                            <button class="text-gray-500 hover:text-red-500">
+                                🗑️
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- graph -->
+        <div class="bg-white rounded-3xl shadow p-4">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Statistics</h2>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<app-staff-form 
+    *ngIf="showModal"
+    (modalClosed)="closeModal()"
+    (staffAdded)="handleStaffAdded($event)">
+</app-staff-form>

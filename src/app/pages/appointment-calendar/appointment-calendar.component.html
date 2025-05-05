@@ -1,0 +1,62 @@
+<!-- calendar.component.html -->
+<div class="p-4 space-y-4">
+  <!-- Toolbar -->
+  <div class="flex justify-between items-center border-b pb-2">
+    <div class="flex items-center gap-4">
+      <span class="font-semibold text-gray-700">15 Total Bookings</span>
+      <button class="text-sm text-purple-600">Today</button>
+      <input type="date" [(ngModel)]="selectedDate" class="text-sm border p-1 rounded" />
+    </div>
+    <div class="flex gap-2 items-center">
+      <select class="text-sm border rounded px-2 py-1">
+        <option>All Staff</option>
+        <!-- Dynamically populate staff filters -->
+      </select>
+      <button class="bg-purple-600 text-white px-3 py-1 rounded shadow hover:bg-purple-700 text-sm">New Booking</button>
+    </div>
+  </div>
+
+  <!-- Calendar Grid -->
+  <div class="overflow-x-auto">
+    <div class="grid" [ngStyle]="{ 'grid-template-columns': '120px repeat(' + staff.length + ', 1fr)' }">
+      <!-- Time Column -->
+      <div class="border-r border-gray-200">
+        <div *ngFor="let time of timeSlots" class="h-20 border-b text-sm text-gray-500 p-2">
+          {{ time }}
+        </div>
+      </div>
+
+      <!-- Staff Columns -->
+      <div *ngFor="let member of staff" class="border-r border-gray-200">
+        <!-- Staff Header -->
+        <div class="text-center border-b p-2">
+          <img [src]="member.avatar" class="mx-auto w-8 h-8 rounded-full mb-1" />
+          <div class="text-xs font-semibold">{{ member.name }}</div>
+          <div class="text-xs text-gray-400">{{ member.role }}</div>
+          <div *ngIf="member.onLeave" class="text-xs text-red-500 font-bold mt-1">On Leave</div>
+        </div>
+
+        <!-- Booking slots -->
+        <div class="relative">
+          <ng-container *ngFor="let booking of member.bookings">
+            <div
+              class="absolute left-1 right-1 rounded p-1 text-xs text-white"
+              [ngClass]="{
+                'bg-purple-300': booking.status === 'Pending',
+                'bg-yellow-400': booking.status === 'Cancelled',
+                'bg-red-400': booking.status === 'Ongoing',
+                'bg-green-400': booking.status === 'Confirmed'
+              }"
+              [style.top.%]="getSlotTopPercent(booking.start)"
+              [style.height.%]="getSlotHeightPercent(booking.start, booking.end)"
+            >
+              <div class="font-semibold">{{ booking.name }}</div>
+              <div class="text-xs">{{ booking.start }} - {{ booking.end }}</div>
+              <span class="block text-[10px]">{{ booking.status }}</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
