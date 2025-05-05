@@ -1,4 +1,4 @@
-<div class="bg-[#7830C54D] bg-opacity-30 fixed right-10 bottom-8 rounded-full p-1 inline-flex">
+<div class="bg-[#7830C54D] bg-opacity-30 fixed z-1 right-10 bottom-8 rounded-full p-1 inline-flex">
     <div class="bg-[#370D65B2] bg-opacity-70 rounded-full p-1.5 inline-flex">
         <button class="rounded-full p-2 bg-[#370D65]" (click)="toggleModal()">
             <img [src]="'assets/icons/robot.png'" alt="" class="w-9 h-9">
@@ -9,7 +9,7 @@
 
 <!--Chat bot-->
 <div *ngIf="isModalOpen" #modal
-    class="fixed flex flex-col justify-start items-start right-36 shadow-xl bottom-5 border border-gray-100 bg-gradient-to-r from-[#EFF2F6] via-[#F6E3EB] to-[#D5DEED] rounded-2xl px-3 py-6 w-4/12">
+    class="fixed flex flex-col z-1 justify-start items-start right-36 shadow-xl bottom-5 border border-gray-100 bg-gradient-to-r from-[#EFF2F6] via-[#F6E3EB] to-[#D5DEED] rounded-2xl px-3 py-6 w-4/12">
     <div class="inline-flex justify-end items-center w-full">
         <div class="rounded-full bg-gray-50 p-2 cursor-pointer" (click)="closeModal()">
             <img [src]="'assets/icons/cross.png'" alt="" class="w-4 h-auto">

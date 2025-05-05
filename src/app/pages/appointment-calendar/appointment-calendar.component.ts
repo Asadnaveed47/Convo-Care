@@ -1,47 +1,76 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
 import { FormsModule } from '@angular/forms';
 
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { CalendarOptions } from '@fullcalendar/core/index.js';
+
 @Component({
-  // imports: [CommonModule, FormsModule],
-  imports: [CommonModule, FormsModule],
-  templateUrl: './appointment-calendar.component.html',
-  styleUrl: './appointment-calendar.component.css'
+    // imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, FullCalendarModule],
+    templateUrl: './appointment-calendar.component.html',
+    styleUrl: './appointment-calendar.component.css'
 })
 export class AppointmentCalendarComponent {
-  selectedDate = new Date();
+    @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
 
-  timeSlots = [
-    '9:00 am', '10:00 am', '11:00 am', '12:00 pm',
-    '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm'
-  ];
+    calendarOptions: CalendarOptions = {
+        plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+        initialView: 'timeGridDay',
+        headerToolbar: false,
+        allDaySlot: false,
+        editable: true,
+        selectable: true,
+        nowIndicator: true,
+        slotMinTime: '00:00:00',
+        slotMaxTime: '24:00:00',
+        slotDuration: '00:30:00',
+        events: [
+            { title: 'Meeting', start: '2025-05-05T16:00:00' },
+            { title: 'Launch', start: '2025-05-06T10:30:00' }
+        ]
+    };
 
-  staff = [
-    {
-      name: 'John Peter',
-      role: 'Dentist',
-      avatar: 'assets/profile-pic.png',
-      onLeave: false,
-      bookings: [
-        { name: 'Kelly Maria', start: 11, end: 12, status: 'Pending' },
-        { name: 'James Boland', start: 13, end: 13.5, status: 'Pending' }
-      ]
-    },
-    {
-      name: 'Khawaja',
-      role: 'Sargon',
-      avatar: 'assets/profile-pic.png',
-      onLeave: true,
-      bookings: []
-    },
-    // Add other staff here...
-  ];
 
-  getSlotTopPercent(start: number): number {
-    return ((start - 9) / (17 - 9)) * 100;
-  }
 
-  getSlotHeightPercent(start: number, end: number): number {
-    return ((end - start) / (17 - 9)) * 100;
-  }
+    private calendarApi: any;
+    currentDateTime: string = '';
+
+    ngOnInit() {
+        this.updateCurrentDateTime();
+        setInterval(() => this.updateCurrentDateTime(), 60000); // Update every minute
+    }
+    ngAfterViewInit() {
+        this.calendarApi = this.calendarComponent.getApi();
+    }
+    updateCurrentDateTime() {
+        const now = new Date();
+        this.currentDateTime = now.toLocaleString('en-US', {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+    }
+
+    changeView(view: 'dayGridMonth' | 'timeGridWeek' | 'timeGridDay') {
+        this.calendarApi?.changeView(view);
+    }
+
+    next() {
+        this.calendarApi?.next();
+    }
+
+    prev() {
+        this.calendarApi?.prev();
+    }
+
+    today() {
+        this.calendarApi?.today();
+    }
 }
