@@ -2,7 +2,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainDashboardComponent } from './core/main-dashboard/main-dashboard.component';
 import { NgModule } from '@angular/core';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { BusinessComponent } from './pages/business/business.component';
 import { StaffComponent } from './pages/staff/staff.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { AppointmentCalendarComponent } from './pages/appointment-calendar/appointment-calendar.component';
@@ -19,10 +18,6 @@ export const routes: Routes = [
       {
         path: 'appontment-calendar',
         component: AppointmentCalendarComponent,
-      },
-      {
-        path: 'business',
-        component: BusinessComponent,
       },
       {
         path: 'staff',

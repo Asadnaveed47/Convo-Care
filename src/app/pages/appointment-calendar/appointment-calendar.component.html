@@ -12,6 +12,7 @@
       <button (click)="changeView('dayGridMonth')" class="px-3 py-1 bg-gray-100 rounded">Month</button>
       <button (click)="changeView('timeGridWeek')" class="px-3 py-1 bg-gray-100 rounded">Week</button>
       <button (click)="changeView('timeGridDay')" class="px-3 py-1 bg-gray-100 rounded">Day</button>
+      <button (click)="addBooking()" class="px-3 py-1 bg-purple-600  text-white rounded">New Booking</button>
     </div>
   </div>
 
@@ -21,3 +22,8 @@
     class="rounded shadow bg-white"
   ></full-calendar>
 </div>
+<app-booking-form 
+    *ngIf="showModal"
+    (modalClosed)="closeModal()"
+    (staffAdded)="handleBookingAdded($event)">
+</app-booking-form>

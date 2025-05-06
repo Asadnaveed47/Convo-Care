@@ -7,15 +7,20 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarOptions } from '@fullcalendar/core/index.js';
+import { BookingFormComponent } from "../dashboard/booking-form/booking-form.component";
 
 @Component({
     // imports: [CommonModule, FormsModule],
-    imports: [CommonModule, FormsModule, FullCalendarModule],
+    imports: [CommonModule, FormsModule, FullCalendarModule, BookingFormComponent],
     templateUrl: './appointment-calendar.component.html',
     styleUrl: './appointment-calendar.component.css'
 })
 export class AppointmentCalendarComponent {
     @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+
+    private calendarApi: any;
+    currentDateTime: string = '';
+    showModal = false;
 
     calendarOptions: CalendarOptions = {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -33,11 +38,6 @@ export class AppointmentCalendarComponent {
             { title: 'Launch', start: '2025-05-06T10:30:00' }
         ]
     };
-
-
-
-    private calendarApi: any;
-    currentDateTime: string = '';
 
     ngOnInit() {
         this.updateCurrentDateTime();
@@ -72,5 +72,19 @@ export class AppointmentCalendarComponent {
 
     today() {
         this.calendarApi?.today();
+    }
+
+    addBooking() {
+        this.showModal = true;
+        console.log('Add Booking button clicked');
+
+    }
+
+    closeModal() {
+        this.showModal = false;
+    }
+
+    handleBookingAdded(newStaff: any) {
+        console.log('New Booking added:', newStaff);
     }
 }

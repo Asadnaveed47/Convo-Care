@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { BusinessFormComponent } from "../../pages/business-form/business-form.component";
 
 @Component({
   selector: 'app-header',
@@ -7,8 +8,19 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css',
   standalone: true,
 
-  imports: [CommonModule],
+  imports: [CommonModule, BusinessFormComponent],
 })
 export class HeaderComponent {
+  showModal = false;
 
+  addBusiness() {
+    this.showModal = true;    
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+
+  handleBookingAdded(newStaff: any) {
+  }
 }

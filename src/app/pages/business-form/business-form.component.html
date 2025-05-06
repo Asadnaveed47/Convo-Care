@@ -1,0 +1,61 @@
+<!-- staff-modal.component.html -->
+<div class="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50">
+    <div class="bg-white rounded-3xl p-6 w-full max-w-6xl">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold">Business Form</h2>
+      <button (click)="closeModal()" class="text-gray-500 hover:text-gray-700">
+        &times;
+      </button>
+    </div>
+    
+    <form class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Service</label>
+          <input type="text" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
+        </div>
+    
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Staff</label>
+          <select class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent">
+            <option>Select Staff</option>
+          </select>
+        </div>
+    
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Customer Name <span class="text-red-500">*</span></label>
+          <input type="email" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
+        </div>
+    
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Customer Email <span class="text-red-500">*</span></label>
+          <input type="tel" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
+        </div>
+    
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Customer Phone</label>
+          <input type="text" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
+        </div>
+    
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Start Time</label>
+          <input type="text" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">End Time</label>
+          <input type="text" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
+        </div>
+
+    
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-gray-700">Notes</label>
+          <input type="text" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
+        </div>
+      </form>
+      <div class="flex justify-end mt-8">
+        <button type="submit" class="bg-[#8879CA] text-white font-semibold py-2 px-6 rounded-full shadow-md">
+          Save
+        </button>
+      </div>
+  </div>
+</div>
