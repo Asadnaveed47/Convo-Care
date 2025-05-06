@@ -1,61 +1,74 @@
-<!-- staff-modal.component.html -->
-<div class="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50">
-    <div class="bg-white rounded-3xl p-6 w-full max-w-6xl">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold">Business Form</h2>
-      <button (click)="closeModal()" class="text-gray-500 hover:text-gray-700">
-        &times;
-      </button>
+<div class="fixed inset-0 backdrop-blur-md bg-gradient-to-r from-[#EFF2F6] via-[#F6E3EB] to-[#D5DEED] z-40 opacity-80"
+    *ngIf="show" (click)="closeModal()">
+</div>
+
+<div class="fixed inset-0 z-50 flex items-center justify-center px-4" *ngIf="show">
+    <div class="w-full max-w-5xl">
+        <h5 class="text-[#271E4A] text-4xl font-bold mb-4 text-left">BUsiness Form</h5>
+        <div class="bg-white rounded-3xl w-full p-8 shadow-2xl relative">
+            <button class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold"
+                (click)="closeModal()">
+                &times;
+            </button>
+            <h5 class="text-[#271E4A] text-2xl mb-2 font-bold text-left">Details</h5>
+
+            <div class="flex flex-col gap-10">
+                <div class="flex flex-row gap-8 w-full">
+                    <div class="relative w-full">
+                        <input id="name" type="text" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="name"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Name</label>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="category" type="email" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="category"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Category</label>
+                    </div>
+                </div>
+
+
+                <div class="flex flex-row gap-8 w-full">
+                    <div class="relative w-full">
+                        <input id="phone" type="text" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="phone"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Phone
+                            Number</label>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="working-hours" type="email" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="working-hours"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Working
+                            Hours</label>
+                    </div>
+                </div>
+
+                <div class="flex flex-row gap-8 w-full">
+                    <div class="relative w-full">
+                        <input id="email" type="text" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="email"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Email
+                            ID</label>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="location" type="email" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="location"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Location</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="flex justify-end mt-10">
+                <button class="bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl">
+                    Save
+                </button>
+            </div>
+
+        </div>
     </div>
-    
-    <form class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Service</label>
-          <input type="text" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
-        </div>
-    
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Staff</label>
-          <select class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent">
-            <option>Select Staff</option>
-          </select>
-        </div>
-    
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Customer Name <span class="text-red-500">*</span></label>
-          <input type="email" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
-        </div>
-    
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Customer Email <span class="text-red-500">*</span></label>
-          <input type="tel" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
-        </div>
-    
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Customer Phone</label>
-          <input type="text" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
-        </div>
-    
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Start Time</label>
-          <input type="text" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700">End Time</label>
-          <input type="text" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
-        </div>
-
-    
-        <div class="md:col-span-2">
-          <label class="block text-sm font-medium text-gray-700">Notes</label>
-          <input type="text" class="w-full border-b border-gray-300 focus:outline-none focus:border-purple-500 p-2 bg-transparent" />
-        </div>
-      </form>
-      <div class="flex justify-end mt-8">
-        <button type="submit" class="bg-[#8879CA] text-white font-semibold py-2 px-6 rounded-full shadow-md">
-          Save
-        </button>
-      </div>
-  </div>
 </div>

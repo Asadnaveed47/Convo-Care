@@ -1,15 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-booking-form',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './booking-form.component.html',
   styleUrl: './booking-form.component.css',
   standalone: true,
 })
 export class BookingFormComponent {
   @Output() modalClosed = new EventEmitter<void>();
-  @Output() bookingAdded = new EventEmitter<any>();
+  @Output() show = new EventEmitter<any>();
 
   ngOnInit() {
     document.body.style.overflow = 'hidden';
