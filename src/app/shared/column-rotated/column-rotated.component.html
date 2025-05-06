@@ -1,0 +1,12 @@
+<div id="chart">  
+    <div [hidden]="chartOptions?.length === 0">
+      <div id="VS" style="height: 350px; margin-top: 0px;"></div>
+    </div>
+  
+    <div *ngIf="chartOptions?.length == 0"
+      style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+      <img style="opacity:0.3; margin-top: 55px !important; margin-bottom: 8px;" src="assets/images/no-graph.png" alt=""
+        width="80px"><br>
+    </div>
+  
+  </div>
