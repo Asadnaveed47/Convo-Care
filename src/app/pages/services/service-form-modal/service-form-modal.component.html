@@ -1,0 +1,102 @@
+<div class="fixed inset-0 backdrop-blur-md bg-gradient-to-r from-[#EFF2F6] via-[#F6E3EB] to-[#D5DEED] z-40 opacity-80"
+    *ngIf="show" (click)="onClose()">
+</div>
+
+<div class="fixed inset-0 z-50 flex items-center justify-center px-4" *ngIf="show">
+    <div class="w-full max-w-6xl">
+        <h5 class="text-[#271E4A] text-4xl font-bold mb-4 text-left">Service Form</h5>
+        <div class="bg-white rounded-3xl w-full p-8 shadow-2xl relative">
+            <button class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold"
+                (click)="onClose()">
+                &times;
+            </button>
+            <h5 class="text-[#271E4A] text-2xl mb-2 font-bold text-left">Details</h5>
+
+            <div class="flex flex-col gap-10">
+                <div class="flex flex-row gap-6 w-full">
+                    <div class="relative w-full max-w-md">
+                        <input id="name" type="text" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="name"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Name</label>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="category" type="text" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="category"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Category</label>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="description" type="text" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="description"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Description</label>
+                    </div>
+                </div>
+
+                <div class="flex flex-row gap-6 w-full">
+                    <div class="flex flex-row gap-6 w-full">
+                        <div class="relative w-full max-w-md">
+                            <input id="duration" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                            <label for="duration"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Duration</label>
+                        </div>
+                        <div class="relative w-full max-w-md">
+                            <input id="price" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                            <label for="price"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Price</label>
+                        </div>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="currency" type="text" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="currency"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Currency</label>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="assigned-staff" type="text" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="assigned-staff"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Assigned
+                            Staff</label>
+                    </div>
+                </div>
+                <div class="flex flex-row gap-6 w-full">
+                    <div class="flex flex-row gap-6 w-full">
+                        <div class="relative w-full max-w-md">
+                            <input id="discount" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                            <label for="discount"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Discount</label>
+                        </div>
+
+                        <div class="flex flex-col gap-1">
+                            <label class="text-sm text-[#271E4ACC]">Status</label>
+                            <div
+                                class="border flex flex-row justify-center items-center p-0.5 border-gray-400 rounded-lg">
+                                <button type="button" class="cursor-pointer rounded-lg px-5 text-xs py-1"
+                                    [ngClass]="{'bg-[#8879CA] text-white': status === 'active', 'text-[#271E4ACC]': status !== 'active'}"
+                                    (click)="status = 'active'">
+                                    Active
+                                </button>
+                                <button type="button" class="cursor-pointer rounded-lg px-5 text-xs py-1"
+                                    [ngClass]="{'bg-[#8879CA] text-white': status === 'inactive', 'text-[#271E4ACC]': status !== 'inactive'}"
+                                    (click)="status = 'inactive'">
+                                    Inactive
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end mt-10">
+                    <button class="bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl">
+                        Save
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
