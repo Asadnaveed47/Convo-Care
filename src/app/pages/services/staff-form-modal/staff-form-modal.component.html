@@ -1,0 +1,103 @@
+<div class="fixed inset-0 backdrop-blur-md bg-gradient-to-r from-[#EFF2F6] via-[#F6E3EB] to-[#D5DEED] z-40 opacity-80" *ngIf="show" (click)="onClose()">
+</div>
+
+<div class="fixed inset-0 z-50 flex items-center justify-center px-4" *ngIf="show">
+    <div class="w-full max-w-6xl">
+        <h5 class="text-[#271E4A] text-4xl font-bold mb-4 text-left">Staff Form</h5>
+        <div class="bg-white rounded-3xl w-full p-8 shadow-2xl relative">
+            <button class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold"
+                (click)="onClose()">
+                &times;
+            </button>
+            <h5 class="text-[#271E4A] text-2xl mb-2 font-bold text-left">Details</h5>
+
+            <div class="flex flex-col gap-10">
+                <div class="flex flex-row gap-6 w-full">
+                    <div class="relative w-full max-w-md">
+                        <input id="name" type="text" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="name"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Name</label>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="email" type="email" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="email"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Email</label>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="working-hours" type="text" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="working-hours"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Working
+                            Hours</label>
+                    </div>
+                </div>
+
+                <div class="flex flex-row gap-6 w-full">
+                    <div class="flex flex-row gap-6 w-full">
+                        <div class="relative w-full max-w-md">
+                            <input id="display-name" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                            <label for="display-name"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Display
+                                Name</label>
+                        </div>
+                        <div class="relative w-full max-w-md">
+                            <input id="language" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                            <label for="language"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Language</label>
+                        </div>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="number" type="tel" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="number"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Phone
+                            Number</label>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="expertise" type="text" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="expertise"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Expertise</label>
+                    </div>
+                </div>
+                <div class="flex flex-row gap-6 w-full">
+                    <div class="flex flex-row gap-6 w-full">
+                        <div class="relative w-full max-w-md">
+                            <input id="bio" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                            <label for="bio"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Bio
+                                / Description</label>
+                        </div>
+                        <div class="relative w-full max-w-md">
+                            <input id="block-times" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                            <label for="block-times"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Block
+                                Times</label>
+                        </div>
+                    </div>
+                    <div class="relative w-full">
+                        <input id="max-appointments" type="number" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <label for="max-appointments"
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Max
+                            Appointments / Day</label>
+                    </div>
+                </div>
+
+               
+            </div>
+            <div class="flex justify-end mt-10">
+                <button class="bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl">
+                    Save
+                </button>
+            </div>
+            
+        </div>
+    </div>
+</div>

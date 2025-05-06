@@ -1,1 +1,107 @@
-<p>services works!</p>
+<div class="flex flex-col justify-center items-center gap-4">
+    <div class="bg-white rounded-xl py-4 px-10 w-full shadow-lg">
+        <div class="flex flex-row justify-between items-center w-full">
+            <h5 class="text-4xl font-bold text-[#271E4A]">Staff</h5>
+            <button (click)="openStaffModal()"
+                class="flex flex-row justify-center items-center cursor-pointer gap-2 bg-[#8879CA] rounded-2xl text-white px-2.5 py-0.5 shadow-xl">
+                <img [src]="'assets/icons/add.png'" alt="" class="w-5 h-auto">
+                <span class="text-xs">New Staff</span>
+            </button>
+        </div>
+
+        <table class="w-full border-collapse text-left mt-4">
+            <thead>
+                <tr class="bg-[#EDF4FC] text-[#271E4A] text-center">
+                    <th class="p-2">#</th>
+                    <th class="p-2 font-semibold">Name</th>
+                    <th class="p-2 font-semibold">Expertise</th>
+                    <th class="p-2 font-semibold">Created at</th>
+                    <th class="p-2 font-semibold">Services</th>
+                    <th class="p-2 font-semibold">Duration</th>
+                    <th class="p-2 font-semibold">Action</th>
+                </tr>
+            </thead>
+
+            <tbody class="text-center text-sm font-semibold text-[#271E4A]">
+                <tr class="border-b border-[#E0E9F4]">
+                    <td class="text-[#0998FF] py-3 px-1">001</td>
+                    <td class="py-3 px-1">Huzaifa Qamar</td>
+                    <td class="flex flex-row justify-center items-center gap-1 py-3 px-1">
+                        <div class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal">X-ray</div>
+                        <div class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal">Ultrasound</div>
+                    </td>
+                    <td class="py-3 px-1">12 Jan 2025, 18:29</td>
+                    <td class="py-3 px-1">Consultancy</td>
+                    <td class="py-3 px-1">10Min</td>
+                    <td class="py-3 px-1 flex flex-row justify-center items-center gap-2">
+                        <button class="shadow-xl rounded-lg p-2 cursor-pointer">
+                            <img [src]="'assets/icons/edit.png'" alt="" class="w-4 h-auto">
+                        </button>
+                        <button class="shadow-xl rounded-lg p-2 cursor-pointer">
+                            <img [src]="'assets/icons/delete.png'" alt="" class="w-4 h-auto">
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bg-white rounded-xl py-4 px-10 w-full shadow-lg">
+        <div class="flex flex-row justify-between items-center w-full">
+            <h5 class="text-4xl font-bold text-[#271E4A]">Services</h5>
+            <button (click)="openServiceModal()"
+                class="flex flex-row justify-center items-center cursor-pointer gap-2 bg-[#8879CA] rounded-2xl text-white px-2.5 py-0.5 shadow-xl">
+                <img [src]="'assets/icons/add.png'" alt="" class="w-5 h-auto">
+                <span class="text-xs">New Service</span>
+            </button>
+        </div>
+
+        <table class="w-full border-collapse text-left mt-4">
+            <thead>
+                <tr class="bg-[#EDF4FC] text-[#271E4A] text-center">
+                    <th class="p-2">#</th>
+                    <th class="p-2 font-semibold">Name</th>
+                    <th class="p-2 font-semibold">Assigned Staff</th>
+                    <th class="p-2 font-semibold">Category</th>
+                    <th class="p-2 font-semibold">Date/Time</th>
+                    <th class="p-2 font-semibold">Duration</th>
+                    <th class="p-2 font-semibold">Price</th>
+                    <th class="p-2 font-semibold">Description</th>
+                    <th class="p-2 font-semibold">Status</th>
+                    <th class="p-2 font-semibold">Action</th>
+                </tr>
+            </thead>
+
+            <tbody class="text-center text-sm font-semibold text-[#271E4A]">
+                <tr class="border-b border-[#E0E9F4]">
+                    <td class="text-[#0998FF] py-3 px-1">001</td>
+                    <td class="py-3 px-1">Huzaifa</td>
+                    <td class="flex flex-row justify-center items-center gap-1 py-3 px-1">
+                        <div class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal">Dr. Z</div>
+                        <div class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal">Dr. Jacob</div>
+                    </td>
+                    <td class="py-3 px-1">Dentist</td>
+                    <td class="py-3 px-1">12 Jan 2025, 18:29</td>
+                    <td class="py-3 px-1">10Min</td>
+                    <td class="py-3 px-1">$15</td>
+                    <td class="py-3 px-1">Consultancy</td>
+                    <td class="py-3 px-1 text-[#8879CA]">Active</td>
+                    <td class="py-3 px-1 flex flex-row justify-center items-center gap-2">
+                        <button class="shadow-xl rounded-lg p-2 cursor-pointer">
+                            <img [src]="'assets/icons/edit.png'" alt="" class="w-4 h-auto">
+                        </button>
+                        <button class="shadow-xl rounded-lg p-2 cursor-pointer">
+                            <img [src]="'assets/icons/delete.png'" alt="" class="w-4 h-auto">
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<app-staff-form-modal [show]="modalType === 'staff'" (close)="closeModal()">
+</app-staff-form-modal>
+
+<app-service-form-modal [show]="modalType === 'service'" (close)="closeModal()">
+</app-service-form-modal>
