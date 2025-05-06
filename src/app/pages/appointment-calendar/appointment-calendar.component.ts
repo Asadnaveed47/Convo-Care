@@ -17,6 +17,7 @@ import { BookingFormComponent } from "../dashboard/booking-form/booking-form.com
 })
 export class AppointmentCalendarComponent {
     @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+    currentView: 'dayGridMonth' | 'timeGridWeek' | 'timeGridDay' = 'dayGridMonth';
 
     private calendarApi: any;
     currentDateTime: string = '';
@@ -24,7 +25,7 @@ export class AppointmentCalendarComponent {
 
     calendarOptions: CalendarOptions = {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-        initialView: 'timeGridDay',
+        initialView: 'dayGridMonth',
         headerToolbar: false,
         allDaySlot: false,
         editable: true,
@@ -59,8 +60,9 @@ export class AppointmentCalendarComponent {
     }
 
     changeView(view: 'dayGridMonth' | 'timeGridWeek' | 'timeGridDay') {
+        this.currentView = view;
         this.calendarApi?.changeView(view);
-    }
+      }
 
     next() {
         this.calendarApi?.next();

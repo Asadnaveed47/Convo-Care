@@ -2,28 +2,42 @@
   <div class="flex justify-between mb-4">
     <div class="space-x-2">
       <button (click)="prev()" class="px-3 py-1 bg-gray-200 rounded">Prev</button>
-      <button (click)="today()" class="px-3 py-1 bg-blue-500 text-white rounded">Today</button>
+      <button (click)="today()" class="px-3 py-1 bg-purple-600 text-white rounded">Today</button>
       <button (click)="next()" class="px-3 py-1 bg-gray-200 rounded">Next</button>
     </div>
     <div class="text-center text-lg font-semibold text-gray-800">
       {{ currentDateTime }}
     </div>
     <div class="space-x-2">
-      <button (click)="changeView('dayGridMonth')" class="px-3 py-1 bg-gray-100 rounded">Month</button>
-      <button (click)="changeView('timeGridWeek')" class="px-3 py-1 bg-gray-100 rounded">Week</button>
-      <button (click)="changeView('timeGridDay')" class="px-3 py-1 bg-gray-100 rounded">Day</button>
-      <button (click)="addBooking()" class="px-3 py-1 bg-purple-600  text-white rounded">New Booking</button>
+      <button (click)="changeView('dayGridMonth')" [ngClass]="{
+          'bg-purple-600 text-white': currentView === 'dayGridMonth',
+          'bg-gray-100': currentView !== 'dayGridMonth'
+        }" class="px-3 py-1 rounded">
+        Month
+      </button>
+
+      <button (click)="changeView('timeGridWeek')" [ngClass]="{
+          'bg-purple-600 text-white': currentView === 'timeGridWeek',
+          'bg-gray-100': currentView !== 'timeGridWeek'
+        }" class="px-3 py-1 rounded">
+        Week
+      </button>
+
+      <button (click)="changeView('timeGridDay')" [ngClass]="{
+          'bg-purple-600 text-white': currentView === 'timeGridDay',
+          'bg-gray-100': currentView !== 'timeGridDay'
+        }" class="px-3 py-1 rounded">
+        Day
+      </button>
+
+      <button (click)="addBooking()" class="px-3 py-1 bg-purple-600 text-white rounded">
+        New Booking
+      </button>
     </div>
+
   </div>
 
-  <full-calendar
-    #calendar
-    [options]="calendarOptions"
-    class="rounded shadow bg-white"
-  ></full-calendar>
+  <full-calendar #calendar [options]="calendarOptions" class="rounded shadow bg-white"></full-calendar>
 </div>
-<app-booking-form 
-    *ngIf="showModal"
-    (modalClosed)="closeModal()"
-    (staffAdded)="handleBookingAdded($event)">
+<app-booking-form *ngIf="showModal" (modalClosed)="closeModal()" (staffAdded)="handleBookingAdded($event)">
 </app-booking-form>
