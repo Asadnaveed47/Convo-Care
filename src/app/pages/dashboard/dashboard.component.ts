@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { BookingFormComponent } from "./booking-form/booking-form.component";
 import { CommonModule } from '@angular/common';
+import { ColumnRotatedComponent } from "../../shared/column-rotated/column-rotated.component";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [BookingFormComponent, CommonModule],
+  imports: [BookingFormComponent, CommonModule, ColumnRotatedComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   standalone: true,
