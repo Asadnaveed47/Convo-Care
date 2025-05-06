@@ -60,6 +60,7 @@ export class AppointmentCalendarComponent {
     }
 
     changeView(view: 'dayGridMonth' | 'timeGridWeek' | 'timeGridDay') {
+        console.log('Change view to:', view);
         this.currentView = view;
         this.calendarApi?.changeView(view);
       }

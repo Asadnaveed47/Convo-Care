@@ -37,7 +37,7 @@
 
   </div>
 
-  <full-calendar #calendar [options]="calendarOptions" class="rounded shadow bg-white"></full-calendar>
+  <full-calendar #calendar [options]="calendarOptions" class="rounded shadow h-200 bg-white"></full-calendar>
 </div>
 <app-booking-form *ngIf="showModal" (modalClosed)="closeModal()" (staffAdded)="handleBookingAdded($event)">
 </app-booking-form>
