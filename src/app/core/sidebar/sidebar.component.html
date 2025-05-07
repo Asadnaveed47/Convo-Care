@@ -1,20 +1,65 @@
-<div class="sidebar min-h-[150vh] flex flex-col justify-between items-center h-screen bg-gradient-to-r from-[#EFF2F6] via-[#F6E3EB] to-[#D5DEED] w-44 py-12">
+<div [ngClass]="{
+    'w-44': !isCollapsed,
+    'w-28': isCollapsed
+  }"
+    class="transition-all duration-500 sidebar min-h-[150vh] flex flex-col justify-between items-center h-screen bg-gradient-to-r from-[#EFF2F6] via-[#F6E3EB] to-[#D5DEED] w-44 py-12">
+
+    <button (click)="toggleSidebar()"
+        class="cursor-pointer rounded-lg p-2.5 bg-[#ffffffa4] transition-all duration-500 absolute" [ngClass]="{
+        'top-12 left-42': !isCollapsed,
+        'top-12 left-26': isCollapsed
+    }">
+        <img [src]="isCollapsed ? 'assets/icons/open.png' : 'assets/icons/close.png'" alt="Toggle" class="w-4 h-auto">
+    </button>
+
+
     <div class="flex flex-col justify-center items-center gap-16">
         <div class="flex flex-col justify-center items-center gap-1 w-full">
-            <img [src]="'assets/hypernym-logo.png'" alt="" class="w-38 h-auto">
+            <img [src]="isCollapsed ? 'assets/hypernym-logo-mini.png' :  'assets/hypernym-logo.png'" alt="" [ngClass]="{
+                'w-10': isCollapsed,
+                'w-32': !isCollapsed
+              }" class="h-auto transition-opacity duration-500">
         </div>
 
-        <div class="flex flex-col justify-center items-center gap-9">
-            <a routerLink="/dashboard" routerLinkActive="active shadow-lg" class="p-2 rounded-lg hover:bg-white transition-colors">
-                <img [src]="'assets/icons/dashboard-icon.png'" alt="Dashboard" class="w-6 h-auto">
+        <div class="flex flex-col justify-center items-center mt-8">
+            <a routerLink="/dashboard" routerLinkActive="active"
+                class="flex flex-col justify-center items-center p-2 rounded-lg">
+                <div class="p-3 hover:bg-white transition-colors rounded-xl icon">
+                    <img [src]="'assets/icons/dashboard-icon.png'"alt="Dashboard" class="w-7 h-auto">
+                </div>
+                <span class="text-xs w-16 text-center transition-opacity duration-500" [ngClass]="{
+                    'opacity-0': isCollapsed,
+                    'opacity-100': !isCollapsed
+                  }">
+                                    Dashboard
+                                </span>
             </a>
 
-            <a routerLink="/appontment-calendar" routerLinkActive="active shadow-lg" class="p-2 rounded-lg hover:bg-white transition-colors">
-                <img [src]="'assets/icons/appointment.png'" alt="Appointments" class="w-6 h-auto">
+            <a routerLink="/appontment-calendar" routerLinkActive="active"
+                class="flex flex-col justify-center items-center p-2 rounded-lg">
+                <div class="p-3 hover:bg-white transition-colors rounded-xl icon">
+                    <img [src]="'assets/icons/appointment.png'" alt="Appointments" class="w-7 h-auto">
+                </div>
+                <span class="text-xs w-16 text-center transition-opacity duration-500" [ngClass]="{
+                    'opacity-0': isCollapsed,
+                    'opacity-100': !isCollapsed
+                  }">
+                                    Calender
+                                </span>
             </a>
 
-            <a routerLink="/services" routerLinkActive="active shadow-lg" class="p-2 rounded-lg hover:bg-white transition-colors">
-                <img [src]="'assets/icons/Layer_1.png'" alt="Forms" class="w-7 h-auto">
+            <a routerLink="/services" routerLinkActive="active"
+                class="flex flex-col justify-center items-center p-2 rounded-lg">
+                <div class="p-3 hover:bg-white transition-colors rounded-xl icon">
+                    <img [src]="'assets/icons/Layer_1.png'" alt="Forms" class="w-7 h-auto">
+                </div>
+                <span class="text-xs w-16 text-center transition-opacity duration-500" [ngClass]="{
+    'opacity-0': isCollapsed,
+    'opacity-100': !isCollapsed
+  }">
+                    Staff & Services
+                </span>
+
             </a>
 
         </div>
@@ -23,5 +68,5 @@
     <a href="">
         <img [src]="'assets/icons/power.png'" alt="" class="w-6 h-auto">
     </a>
-   
+
 </div>
