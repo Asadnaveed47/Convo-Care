@@ -1,5 +1,21 @@
 <div class="flex flex-col justify-center items-center gap-4">
-    <div class="bg-white rounded-xl py-4 px-10 w-full shadow-lg">
+    <div class="flex flex-row justify-start items-center w-full gap-2">
+        <button (click)="activeTab = 'staff'" [ngClass]="{
+          'bg-[#8879CA] text-white': activeTab === 'staff',
+          'bg-[#F0F1F3] text-[#8879CA]': activeTab !== 'staff'
+        }" class="cursor-pointer text-sm rounded-xl px-2.5 py-1.5">
+            Staff
+        </button>
+
+        <button (click)="activeTab = 'service'" [ngClass]="{
+          'bg-[#8879CA] text-white': activeTab === 'service',
+          'bg-[#F0F1F3] text-[#8879CA]': activeTab !== 'service'
+        }" class="cursor-pointer text-sm rounded-xl px-2.5 py-1.5">
+            Services
+        </button>
+    </div>
+
+    <div *ngIf="activeTab === 'staff'" class="bg-white rounded-xl py-4 px-10 w-full shadow-lg">
         <div class="flex flex-row justify-between items-center w-full">
             <h5 class="text-4xl font-bold text-[#271E4A]">Staff</h5>
             <button (click)="openStaffModal()"
@@ -57,7 +73,7 @@
         </table>
     </div>
 
-    <div class="bg-white rounded-xl py-4 px-10 w-full shadow-lg">
+    <div *ngIf="activeTab === 'service'" class="bg-white rounded-xl py-4 px-10 w-full shadow-lg">
         <div class="flex flex-row justify-between items-center w-full">
             <h5 class="text-4xl font-bold text-[#271E4A]">Services</h5>
             <button (click)="openServiceModal()"
@@ -87,7 +103,8 @@
                     <td class="py-3 px-1">{{ services.description }}</td>
                     <td class="py-3 px-1 text-center">
                         <div class="flex justify-center items-center">
-                            <div class="rounded bg-[#4BCB70] px-1 py-1 text-white font-normal">{{ services.status }}</div>
+                            <div class="rounded bg-[#4BCB70] px-1 py-1 text-white font-normal">{{ services.status }}
+                            </div>
                         </div>
                     </td>
                     <td class="py-3 px-1">

@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-service-form-modal',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, NgSelectModule, FormsModule],
   templateUrl: './service-form-modal.component.html',
   styleUrl: './service-form-modal.component.css'
 })
@@ -16,4 +19,12 @@ export class ServiceFormModalComponent {
   }
 
   status: 'active' | 'inactive' = 'active';
+
+  categories = [
+    { id: 1, name: 'Surgery' },
+    { id: 2, name: 'Consultation' }
+  ];
+
+  selectedCategory: any = null;
+  selectedCategories: any[] = [];
 }

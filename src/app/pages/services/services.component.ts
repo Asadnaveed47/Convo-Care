@@ -49,6 +49,10 @@ export class ServicesComponent {
 
   // ------------------------------------------ //
 
+  activeTab: 'staff' | 'service' = 'staff'; 
+
+  // ------------------------------------------ //
+
   modalType: 'staff' | 'service' | null = null;
 
   openStaffModal() {
