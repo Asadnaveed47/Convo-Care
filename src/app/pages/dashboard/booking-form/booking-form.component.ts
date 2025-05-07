@@ -15,6 +15,10 @@ export class BookingFormComponent {
   ngOnInit() {
     document.body.style.overflow = 'hidden';
   }
+
+  onSubmit(){
+    
+  }
   
   closeModal() {
     this.modalClosed.emit();

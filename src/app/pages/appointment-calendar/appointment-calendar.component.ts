@@ -22,6 +22,8 @@ export class AppointmentCalendarComponent {
     private calendarApi: any;
     currentDateTime: string = '';
     showModal = false;
+    activeTab: 'calendar' | 'list' = 'calendar';
+
 
     calendarOptions: CalendarOptions = {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
