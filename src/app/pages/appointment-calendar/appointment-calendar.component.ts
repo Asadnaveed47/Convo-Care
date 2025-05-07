@@ -38,7 +38,14 @@ export class AppointmentCalendarComponent {
         slotDuration: '00:30:00',
         events: [
             { title: 'Meeting', start: '2025-05-05T16:00:00' },
-            { title: 'Launch', start: '2025-05-06T10:30:00' }
+            { title: 'Launch', start: '2025-05-06T10:30:00' },
+            { title: 'Conference', start: '2025-05-06T10:30:00' },
+            { title: 'Workshop', start: '2025-05-08T14:00:00' },
+            { title: 'Webinar', start: '2025-05-09T09:00:00' },
+            { title: 'Networking', start: '2025-05-06T10:30:00' },
+            { title: 'Team Building', start: '2025-05-11T13:00:00' },
+            { title: 'Training', start: '2025-05-12T15:00:00' },
+            { title: 'Seminar', start: '2025-05-13T17:00:00' },
         ]
     };
 
@@ -65,6 +72,7 @@ export class AppointmentCalendarComponent {
         console.log('Change view to:', view);
         this.currentView = view;
         this.calendarApi?.changeView(view);
+        this.calendarApi = this.calendarComponent.getApi();
       }
 
     next() {
