@@ -5,8 +5,10 @@
 <div class="fixed inset-0 z-50 flex items-center justify-center px-4" *ngIf="show">
     <div class="w-full max-w-5xl">
         <h5 class="text-[#271E4A] text-4xl font-bold mb-4 text-left">Business Form</h5>
-        <div class="bg-white rounded-3xl w-full p-8 shadow-2xl relative">
-            <button class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold"
+        <form [formGroup]="businessForm" (ngSubmit)="onSubmit()"
+            class="bg-white rounded-3xl w-full p-8 shadow-2xl relative">
+            <button type="button"
+                class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold"
                 (click)="closeModal()">
                 &times;
             </button>
@@ -15,68 +17,134 @@
             <div class="flex flex-col gap-10">
                 <div class="flex flex-row gap-8 w-full">
                     <div class="relative w-full">
-                        <input id="name" type="text" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <input id="name" type="text" formControlName="name" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                            [ngClass]="{'border-red-500': name?.invalid && (name?.dirty || name?.touched)}" />
                         <label for="name"
                             class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Name</label>
+                        <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="text-red-500 text-xs mt-1">
+                            <div *ngIf="name?.errors?.['required']">Name is required</div>
+                            <div *ngIf="name?.errors?.['minlength']">Name must be at least 2 characters</div>
+                        </div>
                     </div>
                     <div class="relative w-full">
-                        <input id="business-type" type="email" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <input id="business-type" type="text" formControlName="businessType" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                            [ngClass]="{'border-red-500': businessType?.invalid && (businessType?.dirty || businessType?.touched)}" />
                         <label for="business-type"
-                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Business Type</label>
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Business
+                            Type</label>
+                        <div *ngIf="businessType?.invalid && (businessType?.dirty || businessType?.touched)"
+                            class="text-red-500 text-xs mt-1">
+                            <div *ngIf="businessType?.errors?.['required']">Business type is required</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="flex flex-row gap-8 w-full">
                     <div class="relative w-full">
-                        <input id="currency" type="email" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <select id="currency" formControlName="currency"
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                            [ngClass]="{'border-red-500': currency?.invalid && (currency?.dirty || currency?.touched)}">
+                            <!-- <option value="" disabled selected>Select a currency</option> -->
+                            <option *ngFor="let currency of currenciesList" [value]="currency.code">
+                                {{ currency.name }} ({{ currency.symbol || currency.code }})
+                            </option>
+                        </select>
                         <label for="currency"
                             class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Currency</label>
+                        <div *ngIf="currency?.invalid && (currency?.dirty || currency?.touched)"
+                            class="text-red-500 text-xs mt-1">
+                            <div *ngIf="currency?.errors?.['required']">Currency is required</div>
+                        </div>
                     </div>
-                    
+
                     <div class="flex flex-row gap-8 w-full">
                         <div class="relative w-full">
-                            <input id="phone" type="text" placeholder=" "
-                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                            <input id="phone" type="text" formControlName="phone" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                [ngClass]="{'border-red-500': phone?.invalid && (phone?.dirty || phone?.touched)}" />
                             <label for="phone"
                                 class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Phone
                                 Number</label>
+                            <div *ngIf="phone?.invalid && (phone?.dirty || phone?.touched)"
+                                class="text-red-500 text-xs mt-1">
+                                <div *ngIf="phone?.errors?.['required']">Phone number is required</div>
+                                <div *ngIf="phone?.errors?.['pattern']">Please enter a valid phone number (10-15 digits)
+                                </div>
+                            </div>
                         </div>
                         <div class="relative w-full">
-                            <input id="working-hours" type="email" placeholder=" "
-                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+
+                            <div class="relative w-full">
+                                <select id="working-hours" formControlName="workingHours"
+                                    class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                    [ngClass]="{'border-red-500': workingHours?.invalid && (workingHours?.dirty || workingHours?.touched)}">
+                                    <!-- <option value="" disabled selected>Select a currency</option> -->
+                                    <option *ngFor="let working of workHours" [value]="working.code">
+                                        {{ working.name }}
+                                    </option>
+                                </select>
+                                <label for="working-hours"
+                                    class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Working Hours</label>
+                                <div *ngIf="workingHours?.invalid && (workingHours?.dirty || workingHours?.touched)"
+                                    class="text-red-500 text-xs mt-1">
+                                    <div *ngIf="workingHours?.errors?.['required']">Working hours is required</div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <!-- <input id="working-hours" type="text" formControlName="workingHours" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                [ngClass]="{'border-red-500': workingHours?.invalid && (workingHours?.dirty || workingHours?.touched)}" />
                             <label for="working-hours"
                                 class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Working
                                 Hours</label>
+                            <div *ngIf="workingHours?.invalid && (workingHours?.dirty || workingHours?.touched)"
+                                class="text-red-500 text-xs mt-1">
+                                <div *ngIf="workingHours?.errors?.['required']">Working hours are required</div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
 
                 <div class="flex flex-row gap-8 w-full">
                     <div class="relative w-full">
-                        <input id="email" type="text" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <input id="email" type="email" formControlName="email" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                            [ngClass]="{'border-red-500': email?.invalid && (email?.dirty || email?.touched)}" />
                         <label for="email"
                             class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Email
                             ID</label>
+                        <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+                            class="text-red-500 text-xs mt-1">
+                            <div *ngIf="email?.errors?.['required']">Email is required</div>
+                            <div *ngIf="email?.errors?.['email']">Please enter a valid email</div>
+                        </div>
                     </div>
                     <div class="relative w-full">
-                        <input id="location" type="email" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        <input id="location" type="text" formControlName="location" placeholder=" "
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                            [ngClass]="{'border-red-500': location?.invalid && (location?.dirty || location?.touched)}" />
                         <label for="location"
                             class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Location</label>
+                        <div *ngIf="location?.invalid && (location?.dirty || location?.touched)"
+                            class="text-red-500 text-xs mt-1">
+                            <div *ngIf="location?.errors?.['required']">Location is required</div>
+                        </div>
                     </div>
                 </div>
-
             </div>
             <div class="flex justify-end mt-10">
-                <button class="bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl">
+                <button type="submit"
+                    class="bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl"
+                    [disabled]="businessForm.invalid">
                     Save
                 </button>
             </div>
-
-        </div>
+        </form>
     </div>
 </div>
