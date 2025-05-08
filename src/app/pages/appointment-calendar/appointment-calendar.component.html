@@ -4,21 +4,17 @@
 
 <div class="p-4">
   <!-- Tabs -->
-  <div class="flex  mb-4">
-    <button (click)="activeTab = 'calendar'" 
-            [ngClass]="{
-              'border-b-2 border-purple-600 text-purple-600': activeTab === 'calendar',
-              'text-gray-500': activeTab !== 'calendar'
-            }"
-            class="px-4 py-2 font-medium">
+  <div class="flex  mb-4 gap-4">
+    <button (click)="activeTab = 'calendar'" [ngClass]="{
+      'bg-[#8879CA] text-white': activeTab === 'calendar',
+      'bg-[#F0F1F3] text-[#8879CA]': activeTab !== 'calendar'
+    }" class="font-medium rounded-xl px-2.5 py-1.5">
       Calendar View
     </button>
-    <button (click)="activeTab = 'list'" 
-            [ngClass]="{
-              'border-b-2 border-purple-600 text-purple-600': activeTab === 'list',
-              'text-gray-500': activeTab !== 'list'
-            }"
-            class="px-4 py-2 font-medium">
+    <button (click)="activeTab = 'list'" [ngClass]="{
+      'bg-[#8879CA] text-white': activeTab === 'list',
+      'bg-[#F0F1F3] text-[#8879CA]': activeTab !== 'list'
+    }" class="font-medium rounded-xl px-2.5 py-1.5">
       List View
     </button>
   </div>
@@ -65,6 +61,7 @@
   <div *ngIf="activeTab === 'list'" class="bg-white p-4 rounded shadow">
     <!-- Replace this with actual list view content -->
     <p class="text-gray-600">List view of appointments will be shown here.</p>
+    
   </div>
 </div>
 
