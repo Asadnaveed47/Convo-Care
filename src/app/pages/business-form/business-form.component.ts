@@ -77,20 +77,13 @@ export class BusinessFormComponent {
 
   getBusinessData() {
     let url = new URL(`${environment.baseUrl}/api/v1/businesses`);
-    // for (let key in filters) {
-    //   if (!!filters[key]) {
-    //     url.searchParams.set(key, filters[key]);
-    //   }
-    // }
-
     this.apiService.get(url.href).subscribe((resp: any) => {
       this.BusinessData = resp.data;
-     
-
     }, (err: any) => {
-    
+      console.error('Error fetching business data:', err);
     });
   }
+  
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
