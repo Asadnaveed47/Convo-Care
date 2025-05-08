@@ -19,6 +19,7 @@ export class BusinessFormComponent {
   currenciesList: any[] = [];
   workHours: any[] = [];
   BusinessData: any[] = [];
+  data: any;
 
   constructor(
     private fb: FormBuilder,
@@ -66,13 +67,60 @@ export class BusinessFormComponent {
     document.body.style.overflow = 'hidden';
     this.getBusinessData();
   }
-  onSubmit(): void {
-    if (this.businessForm.valid) {
-      console.log('Form submitted:', this.businessForm.value);
-      this.closeModal();
-    } else {
-      this.markFormGroupTouched(this.businessForm);
+  onSubmit() {
+    // this.loading = true;
+
+    const fd = this.businessForm.value;
+    if (!this.businessForm.valid) {
+        return;
     }
+    let payload: any = {
+        name: fd.name,
+        email: fd.email,
+        currency: fd.currency,
+        phone_number: fd.phone,
+        business_Type: fd.businessType,
+        working_hours: fd.workingHours,
+        location: fd.location,
+    }
+
+    
+
+    if (this.data && this.data.id) {
+        const url = `${environment.baseUrl}/api/v1/businesses?id=${this.data.id}`;
+        this.updateBusinessForm(url, payload);
+    } else {
+        const url = `${environment.baseUrl}/api/v1/businesses`;
+        this.createBusinessForm(url, payload);
+    }
+  }
+
+  createBusinessForm(url: string, payload: any) {
+    this.apiService.post(url, payload).subscribe((resp: any) => {
+      if (resp.status === 1000) {
+        this.businessForm.reset();
+        this.getBusinessData();
+        this.closeModal();
+      } else {
+        console.error('Error creating business form:', resp.message);
+      }
+    }, (err: any) => {
+      console.error('Error creating business form:', err);
+    });
+
+  }
+  updateBusinessForm(url: string, payload: any) {
+    this.apiService.patch(url, payload).subscribe((resp: any) => {
+      if (resp.status === 1000) {
+        this.businessForm.reset();
+        this.getBusinessData();
+        this.closeModal();
+      } else {
+        console.error('Error updating business form:', resp.message);
+      }
+    }, (err: any) => {
+      console.error('Error updating business form:', err);
+    });
   }
 
   getBusinessData() {
@@ -83,7 +131,7 @@ export class BusinessFormComponent {
       console.error('Error fetching business data:', err);
     });
   }
-  
+
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
