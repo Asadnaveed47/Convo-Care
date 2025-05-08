@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ApiService } from '../../service/api.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-business-form',
@@ -16,8 +18,12 @@ export class BusinessFormComponent {
   businessForm: FormGroup;
   currenciesList: any[] = [];
   workHours: any[] = [];
+  BusinessData: any[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiService
+  ) {
     this.businessForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       businessType: ['', Validators.required],
@@ -58,6 +64,7 @@ export class BusinessFormComponent {
 
   ngOnInit() {
     document.body.style.overflow = 'hidden';
+    this.getBusinessData();
   }
   onSubmit(): void {
     if (this.businessForm.valid) {
@@ -66,6 +73,23 @@ export class BusinessFormComponent {
     } else {
       this.markFormGroupTouched(this.businessForm);
     }
+  }
+
+  getBusinessData() {
+    let url = new URL(`${environment.baseUrl}/api/v1/businesses`);
+    // for (let key in filters) {
+    //   if (!!filters[key]) {
+    //     url.searchParams.set(key, filters[key]);
+    //   }
+    // }
+
+    this.apiService.get(url.href).subscribe((resp: any) => {
+      this.BusinessData = resp.data;
+     
+
+    }, (err: any) => {
+    
+    });
   }
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
