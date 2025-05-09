@@ -12,9 +12,10 @@ import { ApiserviceService } from '../../../services/apiservice/apiservice.servi
   styleUrl: './booking-form.component.css'
 })
 export class BookingFormComponent implements OnInit {
-  @Input() show = false;
+  // @Input() show = false;
   @Input() bookingToEdit?: any;
   @Output() close = new EventEmitter<void>();
+  @Output() show = new EventEmitter<void>();
 
   bookingForm: FormGroup;
   private baseUrl = environment.baseUrl;

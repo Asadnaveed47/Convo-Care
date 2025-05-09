@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';import { CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModule, DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { Component } from '@angular/core';
 
 import { RouterOutlet } from '@angular/router';
 
@@ -7,7 +7,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   standalone: true,
-  imports: [CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModule, DateTimePickerModule, RouterOutlet],
+  imports: [RouterOutlet],
 })
 export class AppComponent {
   title = 'convo-care';
