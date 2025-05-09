@@ -1,62 +1,114 @@
 <div class="fixed inset-0 backdrop-blur-md bg-gradient-to-r from-[#EFF2F6] via-[#F6E3EB] to-[#D5DEED] z-40 opacity-80"
-    *ngIf="show" (click)="onClose()">
-</div>
+    *ngIf="show" (click)="onClose()"></div>
 
 <div class="fixed inset-0 z-50 flex items-center justify-center px-4" *ngIf="show">
     <div class="w-full max-w-5xl">
         <h5 class="text-[#271E4A] text-4xl font-bold mb-4 text-left">Service Form</h5>
-        <div class="bg-white rounded-3xl w-full px-8 py-5 shadow-2xl relative">
-            <button class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold"
-                (click)="onClose()">
-                &times;
-            </button>
-            <h5 class="text-[#271E4A] text-2xl mb-2 font-bold text-left">Details</h5>
 
-            <div class="flex flex-col gap-10">
-                <div class="flex flex-row gap-6 w-full">
-                    <div class="relative w-full max-w-md">
+        <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+            <div class="bg-white rounded-3xl w-full px-10 py-6 shadow-2xl relative">
+                <button class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold"
+                    (click)="onClose()">
+                    &times;
+                </button>
+
+                <h5 class="text-[#271E4A] text-2xl font-bold text-left">Details</h5>
+
+                <div class="flex flex-col md:flex-row gap-6">
+
+                    <div class="relative w-full">
                         <input id="name" type="text" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                            formControlName="name" />
                         <label for="name"
-                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Name</label>
+                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">
+                            Name
+                        </label>
+                        <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                            <span
+                                *ngIf="serviceForm.get('name')?.touched && serviceForm.get('name')?.hasError('required')">
+                                Name is required
+                            </span>
+                        </div>
                     </div>
-                    <div class="border-b text-sm w-xs">
-                        <ng-select [items]="categories" bindLabel="name" placeholder="Category"
-                        [(ngModel)]="selectedCategories" [multiple]="true">
+
+                    <div class="relative w-full select">
+                        <ng-select [items]="categories" bindLabel="name" bindValue="id" placeholder=" "
+                            formControlName="category"
+                            [multiple]="true"
+                            class="category-select peer text-sm w-full border-[#271E4A] bg-transparent"
+                            [ngClass]="{'ng-invalid': serviceForm.get('category')?.touched && serviceForm.get('category')?.invalid}">
                         </ng-select>
-                    </div>
-                   
-                    <div class="flex flex-col gap-1">
-                        <label class="text-sm text-[#271E4ACC]">Status</label>
-                        <div class="border inline-flex justify-center items-center p-0.5 border-gray-400 rounded-lg">
-                            <button type="button" class="cursor-pointer rounded-lg px-5 text-xs py-1"
-                                [ngClass]="{'bg-[#8879CA] text-white': status === 'active', 'text-[#271E4ACC]': status !== 'active'}"
-                                (click)="status = 'active'">
-                                Active
-                            </button>
-                            <button type="button" class="cursor-pointer rounded-lg px-5 text-xs py-1"
-                                [ngClass]="{'bg-[#8879CA] text-white': status === 'inactive', 'text-[#271E4ACC]': status !== 'inactive'}"
-                                (click)="status = 'inactive'">
-                                Inactive
-                            </button>
+                        <label class="absolute left-0 top-1 text-xs text-[#271E4A] transition-all duration-200">
+                            Category
+                        </label>
+                        <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                            <span
+                                *ngIf="serviceForm.get('category')?.touched && serviceForm.get('category')?.hasError('required')">
+                                Category is required
+                            </span>
                         </div>
                     </div>
 
 
+                    <div class="flex flex-col w-full">
+                        <label class="text-sm text-[#271E4A] mb-1">Status</label>
+                        <div class="border border-gray-400 rounded-lg p-0.5 w-fit">
+                          <div class="flex gap-1">
+                            <button type="button"
+                              class="cursor-pointer rounded-lg px-5 text-xs py-1"
+                              [ngClass]="{
+                                'bg-[#8879CA] text-white': serviceForm.get('status')?.value === 'active',
+                                'text-[#271E4ACC]': serviceForm.get('status')?.value !== 'active'
+                              }"
+                              (click)="serviceForm.get('status')?.setValue('active')">
+                              Active
+                            </button>
+                            <button type="button"
+                              class="cursor-pointer rounded-lg px-5 text-xs py-1"
+                              [ngClass]="{
+                                'bg-[#8879CA] text-white': serviceForm.get('status')?.value === 'inactive',
+                                'text-[#271E4ACC]': serviceForm.get('status')?.value !== 'inactive'
+                              }"
+                              (click)="serviceForm.get('status')?.setValue('inactive')">
+                              Inactive
+                            </button>
+                          </div>
+                        </div>
+                        <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                          <span
+                            *ngIf="serviceForm.get('status')?.touched && serviceForm.get('status')?.hasError('required')">
+                            Status is required
+                          </span>
+                        </div>
+                      </div>
+                      
                 </div>
+
                 <div class="relative w-full">
                     <input id="description" type="text" placeholder=" "
-                        class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                        class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                        formControlName="description" />
                     <label for="description"
-                        class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Description</label>
+                        class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">
+                        Description
+                    </label>
+                    <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                        <span
+                            *ngIf="serviceForm.get('description')?.touched && serviceForm.get('description')?.hasError('required')">
+                            Description is required
+                        </span>
+                    </div>
                 </div>
 
                 <div class="flex justify-end">
-                    <button class="cursor-pointer bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl">
+                    <button
+                        class="cursor-pointer bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl"
+                        type="submit">
                         Save
                     </button>
                 </div>
-
             </div>
-        </div>
+        </form>
     </div>
+</div>

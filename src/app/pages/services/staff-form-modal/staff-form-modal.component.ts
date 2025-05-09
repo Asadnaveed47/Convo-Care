@@ -1,18 +1,24 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StaffService } from '../../../service/staff/staff.service';
+import { Component, EventEmitter, Input, Output, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { ApiserviceService } from '../../../services/apiservice/apiservice.service';
+import { environment } from '../../../../environments/environment';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { Staff } from '../../../models/staff/staff';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-staff-form-modal',
-  imports: [CommonModule],
+  imports: [CommonModule, NgSelectModule, ReactiveFormsModule],
   templateUrl: './staff-form-modal.component.html',
   styleUrl: './staff-form-modal.component.css'
 })
-export class StaffFormModalComponent {
-  private staffService = inject(StaffService);
+export class StaffFormModalComponent implements OnInit {
+  private apiService = inject(ApiserviceService);
+  private baseUrl = environment.baseUrl;
+
   @Input() show = false;
+  @Input() staffToEdit?: Staff;
   @Output() close = new EventEmitter<void>();
 
   staffForm!: FormGroup;
@@ -22,34 +28,148 @@ export class StaffFormModalComponent {
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       workingHours: ['', [Validators.required]],
-      displayName: ['', [Validators.required]],
-      language: ['', [Validators.required]],
+      max_appointments_per_day: ['', [Validators.required]],
+      language: [[], [Validators.required]],
       phoneNumber: ['', [Validators.required]],
-      expertise: ['', [Validators.required]],
+      expertise: [[], [Validators.required]],
       bio: ['', [Validators.required]],
       blockTimes: ['', [Validators.required]],
-      maxAppointments: ['', [Validators.required]]
+      allocated_services: this.fb.array([this.createServiceGroup()])
     })
+  }
+
+  ngOnInit(): void {
+    if (this.staffToEdit) {
+      this.staffForm.patchValue({
+        name: this.staffToEdit.name,
+        email: this.staffToEdit.email,
+        workingHours: this.staffToEdit.workingHours,
+        max_appointments_per_day: this.staffToEdit.max_appointments_per_day,
+        language: this.staffToEdit.language,
+        phoneNumber: this.staffToEdit.phoneNumber,
+        expertise: this.staffToEdit.expertise,
+        bio: this.staffToEdit.bio,
+        blockTimes: this.staffToEdit.block_times,
+        allocated_services: this.staffToEdit.allocated_services
+      })
+    }
+  }
+
+  createServiceGroup(): FormGroup {
+    return this.fb.group({
+      service: [null],
+      duration: [''],
+      price: ['']
+    });
+  }
+
+  get allocated_services(): FormArray {
+    return this.staffForm.get('allocated_services') as FormArray;
+  }
+
+  addAllocatedService(): void {
+    if (this.allocated_services.length < 3) {
+      this.allocated_services.push(this.createServiceGroup());
+
+    }
+  }
+
+  removeService(index: number): void {
+    if (this.allocated_services.length > 1) {
+      this.allocated_services.removeAt(index);
+    }
   }
 
   onClose() {
     this.close.emit();
   }
 
+  createStaff(url: string, payload: Staff): void {
+    this.apiService.create(url, payload).subscribe({
+      next: (resp) => {
+        console.log('Staff created:', resp);
+        this.staffForm.reset();
+        this.closeModal();
+      },
+      error: (err) => {
+        console.error('Error creating service:', err);
+      }
+    })
+  }
+
+  updateStaff(url: string, payload: Staff): void {
+    this.apiService.edit(url, payload).subscribe({
+      next: (resp) => {
+        console.log('Staff updated:', resp);
+        this.staffForm.reset();
+        this.closeModal();
+      },
+      error: (err) => {
+        console.error('Error creating service:', err);
+      }
+    })
+  }
+
+  closeModal(): void {
+    this.close.emit();
+  }
+
   onSubmit() {
-    if (this.staffForm.valid) {
-      const staffData: Staff = this.staffForm.value; 
-      this.staffService.createStaff(staffData).subscribe({
-        next: (response) => {
-          console.log('Staff created successfully:', response);
-          this.onClose(); 
-        },
-        error: (error) => {
-          console.error('Error creating staff:', error);
-        }
-      });
+    if (!this.staffForm.valid) {
+      this.markFormGroupTouched(this.staffForm);
+      return;
+    }
+
+    const formValue = this.staffForm.value;
+    const payload: any = {
+      name: formValue.name,
+      email: formValue.email,
+      workingHours: formValue.workingHours,
+      max_appointments_per_day: formValue.max_appointments_per_day,
+      language: formValue.language,
+      phoneNumber: formValue.phoneNumber,
+      expertise: formValue.expertise,
+      bio: formValue.bio,
+      blockTimes: formValue.blockTimes,
+      allocated_services: formValue.allocated_services
+    }
+
+    if (this.staffToEdit?.id) {
+      const url = `${this.baseUrl}/api/v1/businesses/5/staff/${this.staffToEdit.id}`;
+      this.updateStaff(url, payload);
     } else {
-      console.log('Form is invalid');
+      const url = `${this.baseUrl}/api/v1/businesses/5/staff`;
+      this.createStaff(url, payload);
     }
   }
+
+  markFormGroupTouched(formGroup: FormGroup): void {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
+
+  expertise = [
+    { id: 1, name: 'X-ray' },
+    { id: 2, name: 'Consultation' }
+  ];
+
+
+  languages = [
+    { id: 1, name: 'English' },
+    { id: 2, name: 'Urdu' },
+    { id: 3, name: 'Spanish' },
+  ];
+
+  services = [
+    { id: 1, name: 'Generic Consultation' },
+    { id: 2, name: 'Daily Consultation' },
+    { id: 3, name: 'Generic Consultation' }
+
+  ];
+
+  selectedLanguage: any = null;
+
+  selectedExpertise: any = null;
+  selectedMultipleExpertise: any[] = [];
 }

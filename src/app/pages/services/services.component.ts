@@ -1,14 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { StaffFormModalComponent } from "./staff-form-modal/staff-form-modal.component";
 import { ServiceFormModalComponent } from "./service-form-modal/service-form-modal.component";
-
-import { StaffService } from '../../service/staff/staff.service';
 import { Staff } from '../../models/staff/staff';
-
-import { ServicesService } from '../../service/services/services.service';
 import { Services } from '../../models/services/services';
+import { ApiserviceService } from '../../services/apiservice/apiservice.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-services',
@@ -20,8 +17,8 @@ import { Services } from '../../models/services/services';
 export class ServicesComponent {
   constructor() { }
 
-  private staffService = inject(StaffService);
-  private servicesService = inject(ServicesService);
+  private apiService = inject(ApiserviceService);
+  private baseUrl = environment.baseUrl;
 
   staffList: Staff[] = [];
   servicesList: Services[] = [];
@@ -32,7 +29,8 @@ export class ServicesComponent {
   }
 
   loadStaff() {
-    this.staffService.getAllStaff().subscribe(response => {
+    const url = `${this.baseUrl}/api/v1/businesses/5/staff`;
+    this.apiService.get(url).subscribe(response => {
       if (response.status === 1000) {
         this.staffList = response.data;
       }
@@ -40,7 +38,8 @@ export class ServicesComponent {
   }
 
   loadServices() {
-    this.servicesService.getAllServices().subscribe(response => {
+    const url =  `${this.baseUrl}/api/v1/businesses/5/services`;
+    this.apiService.get(url).subscribe(response => {
       if (response.status === 1000) {
         this.servicesList = response.data;
       }

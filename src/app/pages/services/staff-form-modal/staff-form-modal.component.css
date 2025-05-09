@@ -1,0 +1,69 @@
+:host ::ng-deep .ng-dropdown-panel {
+    border: 1px solid #271E4A;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+:host ::ng-deep .ng-option:hover {
+    background-color: #8879CA;
+    color: white;
+    cursor: pointer;
+}
+
+:host ::ng-deep .ng-select .ng-select-container .ng-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+    border-radius: 0.8rem;
+    font-size: 0.55rem;
+    padding: 0.2em 0.3rem;
+    background-color: #F0F0F0;
+}
+
+:host ::ng-deep .ng-select .ng-select-container {
+    padding-top: 24px;
+    min-height: unset;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+:host ::ng-deep .category-select .ng-select-container {
+    padding-bottom: 8px;
+    border-bottom: 1px solid #271E4A !important;
+}
+
+:host ::ng-deep .category-select.ng-select {
+    padding-bottom: 0;
+}
+
+:host ::ng-deep .category-select .ng-value-container {
+    padding-top: 0;
+    padding-left: 0;
+}
+
+:host ::ng-deep .category-select .ng-placeholder {
+    top: 23px;
+}
+
+:host ::ng-deep .category-select.ng-invalid.ng-touched .ng-select-container {
+    border-color: red;
+}
+
+:host ::ng-deep .category-select .ng-arrow-wrapper {
+    padding-right: 0;
+}
+
+:host ::ng-deep .category-select .ng-clear-wrapper {
+    color: #271E4A;
+}
+
+:host ::ng-deep .ng-select.category-select {
+    padding-bottom: 2px !important;
+    margin-bottom: 0 !important;
+}
+
+:host ::ng-deep .ng-select.category-select .ng-has-value .ng-placeholder {
+    display: none;
+}

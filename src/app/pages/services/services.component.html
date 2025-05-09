@@ -43,21 +43,24 @@
                     <td class="text-[#0998FF] py-3 px-1">{{ staff.id }}</td>
                     <td class="py-3 px-1">{{ staff.name }}</td>
                     <td class="py-3 px-1">
+                        {{staff.bio}}
+                        <!--
                         <div class="flex flex-row justify-center items-center gap-1 ">
                             <div class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal"></div>
                             <div class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal">Ultrasound
                             </div>
                         </div>
+                        -->
                     </td>
                     <td class="py-3 px-1">
                         <div class="flex flex-row justify-center items-center gap-1 ">
-                            <div class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal">X-ray</div>
-                            <div class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal">Ultrasound
-                            </div>
+                            <div *ngFor="let allocated_service of staff.allocated_services"
+                                class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal">
+                                {{allocated_service.service_name}}</div>
                         </div>
                     </td>
-                    <td class="py-3 px-1">20</td>
-                    <td class="py-3 px-1">{{ staff.created_at | date: 'dd MMM yyyy' }}</td>
+                    <td class="py-3 px-1">{{staff.max_appointments_per_day}}</td>
+                    <td class="py-3 px-1">12.05.2025</td>
                     <td class="py-3 px-1">
                         <div class="flex flex-row justify-center items-center gap-2">
                             <button class="shadow-xl rounded-lg p-2 cursor-pointer">
@@ -99,11 +102,15 @@
                 <tr *ngFor="let services of servicesList" class="border-b border-[#E0E9F4]">
                     <td class="text-[#0998FF] py-3 px-1">{{ services.id }}</td>
                     <td class="py-3 px-1">{{ services.name }}</td>
-                    <td class="py-3 px-1">Dentist</td>
+                    <td class="py-3 px-1">{{services.category}}</td>
                     <td class="py-3 px-1">{{ services.description }}</td>
                     <td class="py-3 px-1 text-center">
                         <div class="flex justify-center items-center">
-                            <div class="rounded bg-[#4BCB70] px-1 py-1 text-white font-normal">{{ services.status }}
+                            <div class="rounded px-1 py-1 text-white font-normal"
+                                [ngClass]="{
+                                'bg-[#4BCB70]': services.status === '1',
+                                'bg-red-500': services.status !== '1'}">
+                                {{ services.status === '1' ? 'Active' : 'Inactive' }}
                             </div>
                         </div>
                     </td>
@@ -126,5 +133,5 @@
 <app-staff-form-modal [show]="modalType === 'staff'" (close)="closeModal()">
 </app-staff-form-modal>
 
-<app-service-form-modal [show]="modalType === 'service'" (close)="closeModal()">
+<app-service-form-modal  [show]="modalType === 'service'" (close)="closeModal()">
 </app-service-form-modal>
