@@ -1,98 +1,169 @@
-<div class="fixed inset-0 backdrop-blur-md bg-gradient-to-r from-[#EFF2F6] via-[#F6E3EB] to-[#D5DEED] z-40 opacity-80" *ngIf="show" (click)="closeModal()">
+<div class="fixed inset-0 backdrop-blur-md bg-gradient-to-r from-[#EFF2F6] via-[#F6E3EB] to-[#D5DEED] z-40 opacity-80"
+    *ngIf="show" (click)="closeModal()">
 </div>
 
 <div class="fixed inset-0 z-50 flex items-center justify-center px-4" *ngIf="show">
     <div class="w-full max-w-5xl">
-        <!-- <h5 class="text-[#271E4A] text-4xl font-bold mb-4 text-left">Booking Form</h5> -->
         <div class="bg-white rounded-3xl w-full p-8 shadow-2xl relative">
             <button class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold"
                 (click)="closeModal()">
                 &times;
             </button>
-            <h5 class="text-[#271E4A] text-2xl mb-2 font-bold text-left">Booking</h5>
+            <h5 class="text-[#271E4A] text-2xl font-bold text-left">Booking</h5>
 
-            <div class="flex flex-col gap-10">
-                <div class="flex flex-row gap-6 w-full">
-                    <div class="relative w-full max-w-md">
-                        <input id="service" type="text" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
-                        <label for="service"
-                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Service</label>
-                    </div>
-                    <div class="relative w-full">
-                        <input id="staff" type="email" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
-                        <label for="staff"
-                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Staff</label>
-                    </div>
-                    <div class="relative w-full">
-                        <input id="customer" type="text" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
-                        <label for="customer"
-                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Customer Name
-                            </label>
-                    </div>
-                    <div class="flex flex-row gap-6 w-full">
-                        <div class="relative w-full">
-                            <input id="customer-email" type="text" placeholder=" "
-                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+            <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+                <div class="flex flex-col">
+                    <div class="flex flex-wrap gap-6">
+                        <div class="relative w-full max-w-sm flex-1">
+                            <input id="service" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                formControlName="service" />
+                            <label for="service"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Service</label>
+                            <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                                <span
+                                    *ngIf="bookingForm.get('service')?.touched && bookingForm.get('service')?.hasError('required')">
+                                    Service is required
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="relative w-full max-w-sm flex-1">
+                            <input id="staff" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                formControlName="staff" />
+                            <label for="staff"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Staff</label>
+                            <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                                <span
+                                    *ngIf="bookingForm.get('staff')?.touched && bookingForm.get('staff')?.hasError('required')">
+                                    Staff is required
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="relative w-full max-w-sm flex-1">
+                            <input id="customer" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                formControlName="customerName" />
+                            <label for="customer"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Customer
+                                Name</label>
+                            <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                                <span
+                                    *ngIf="bookingForm.get('customerName')?.touched && bookingForm.get('customerName')?.hasError('required')">
+                                    Customer name is required
+                                </span>
+                                <span
+                                    *ngIf="bookingForm.get('customerName')?.touched && bookingForm.get('customerName')?.hasError('minlength')">
+                                    Minimum 2 characters required
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="relative w-full max-w-sm flex-1">
+                            <input id="customer-email" type="email" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                formControlName="customerEmail" />
                             <label for="customer-email"
-                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Customer Email
-                                </label>
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Customer
+                                Email</label>
+                            <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                                <span
+                                    *ngIf="bookingForm.get('customerEmail')?.touched && bookingForm.get('customerEmail')?.hasError('required')">
+                                    Email is required
+                                </span>
+                                <span
+                                    *ngIf="bookingForm.get('customerEmail')?.touched && bookingForm.get('customerEmail')?.hasError('email')">
+                                    Invalid email address
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="flex flex-row gap-6 w-full">
-                    <div class="relative w-full max-w-md">
-                        <input id="customer-phone" type="text" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
-                        <label for="customer-phone"
-                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Customer Phone</label>
-                    </div>
-                    <div class="relative w-full">
-                        <input id="starttime" type="email" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
-                        <label for="starttime"
-                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Start Time</label>
-                    </div>
-                    <div class="relative w-full">
-                        <input id="endtime" type="text" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
-                        <label for="endtime"
-                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">End Time
-                            </label>
-                    </div>
-                    <div class="flex flex-row gap-6 w-full">
-                        <div class="relative w-full">
+                    <div class="flex flex-wrap gap-6">
+                        <div class="relative w-full max-w-sm flex-1">
+                            <input id="customer-phone" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                formControlName="customerPhone" />
+                            <label for="customer-phone"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Customer
+                                Phone</label>
+                            <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                                <span
+                                    *ngIf="bookingForm.get('customerPhone')?.touched && bookingForm.get('customerPhone')?.hasError('required')">
+                                    Phone number is required
+                                </span>
+                                <span
+                                    *ngIf="bookingForm.get('customerPhone')?.touched && bookingForm.get('customerPhone')?.hasError('pattern')">
+                                    Invalid phone number
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="relative w-full max-w-sm flex-1">
+                            <input id="starttime" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                formControlName="startTime" />
+                            <label for="starttime"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Start
+                                Time</label>
+                            <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                                <span
+                                    *ngIf="bookingForm.get('startTime')?.touched && bookingForm.get('startTime')?.hasError('required')">
+                                    Start time is required
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="relative w-full max-w-sm flex-1">
+                            <input id="endtime" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                formControlName="endTime" />
+                            <label for="endtime"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">End
+                                Time</label>
+                            <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                                <span
+                                    *ngIf="bookingForm.get('endTime')?.touched && bookingForm.get('endTime')?.hasError('required')">
+                                    End time is required
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="relative w-full max-w-sm flex-1">
                             <input id="status" type="text" placeholder=" "
-                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                formControlName="status" />
                             <label for="status"
-                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Status
-                                </label>
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Status</label>
+                            <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                                <span
+                                    *ngIf="bookingForm.get('status')?.touched && bookingForm.get('status')?.hasError('required')">
+                                    Status is required
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="flex flex-row gap-6 w-full">
-                   
-                    <div class="relative w-full">
-                        <input id="notes" type="number" placeholder=" "
-                            class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
-                        <label for="notes"
-                            class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">
-                            Notes</label>
+                    <div class="flex w-full">
+                        <div class="relative w-full">
+                            <input id="notes" type="text" placeholder=" "
+                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
+                                formControlName="notes" />
+                            <label for="notes"
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Notes</label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end mt-10">
+                        <button type="submit"
+                            class="bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl">
+                            Save
+                        </button>
                     </div>
                 </div>
-
-               
-            </div>
-            <div class="flex justify-end mt-10">
-                <button class="bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl">
-                    Save
-                </button>
-            </div>
-            
+            </form>
         </div>
     </div>
 </div>
