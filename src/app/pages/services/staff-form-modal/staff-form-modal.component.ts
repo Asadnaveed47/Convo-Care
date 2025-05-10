@@ -27,6 +27,10 @@ export class StaffFormModalComponent implements OnInit {
   newStartTime = '';
   newEndTime = '';
 
+
+  blockTimeRanges: { start: string; end: string }[] = [];
+  currentField: 'workingHours' | 'blockTimes' = 'workingHours';
+
   constructor(private fb: FormBuilder) {
     this.staffForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -179,32 +183,38 @@ export class StaffFormModalComponent implements OnInit {
 
   
   // Open the popup
-  openTimeRangePicker() {
+  openTimeRangePicker(field: 'workingHours' | 'blockTimes') {
+    this.currentField = field;
     this.newStartTime = '';
     this.newEndTime = '';
     this.showTimePicker = true;
   }
   
-  // Close popup
-  closeTimePicker() {
-    this.showTimePicker = false;
+  addTimeRange() {
+    const range = { start: this.newStartTime, end: this.newEndTime };
+    if (this.currentField === 'workingHours') {
+      this.timeRanges.push(range);
+      this.staffForm.get('workingHours')?.setValue(this.timeRanges);
+    } else {
+      this.blockTimeRanges.push(range);
+      this.staffForm.get('blockTimes')?.setValue(this.blockTimeRanges);
+    }
+    this.closeTimePicker();
   }
   
-  // Add the selected time range to the list
-  addTimeRange() {
-    if (this.newStartTime && this.newEndTime) {
-      this.timeRanges.push({ start: this.newStartTime, end: this.newEndTime });
-      this.updateWorkingHoursForm();
-      this.closeTimePicker();
+  removeRange(index: number, field: 'workingHours' | 'blockTimes') {
+    if (field === 'workingHours') {
+      this.timeRanges.splice(index, 1);
+      this.staffForm.get('workingHours')?.setValue(this.timeRanges);
+    } else {
+      this.blockTimeRanges.splice(index, 1);
+      this.staffForm.get('blockTimes')?.setValue(this.blockTimeRanges);
     }
   }
   
-  // Remove specific range
-  removeRange(index: number) {
-    this.timeRanges.splice(index, 1);
-    this.updateWorkingHoursForm();
+  closeTimePicker() {
+    this.showTimePicker = false;
   }
-  
   // Update hidden input value
   updateWorkingHoursForm() {
     const timeStrings = this.timeRanges.map(r => `${r.start} - ${r.end}`);
