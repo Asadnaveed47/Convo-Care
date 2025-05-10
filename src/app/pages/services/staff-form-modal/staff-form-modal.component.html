@@ -267,7 +267,9 @@
 <!-- Time Range Modal -->
 <div *ngIf="showTimePicker" class="fixed inset-0 bg-transparent bg-opacity-30 flex items-center justify-center z-50">
     <div class="bg-white p-6 rounded-xl shadow-lg w-80">
-        <h3 class="text-md font-semibold mb-4">Select Working Hours</h3>
+        <h3 class="text-md font-semibold mb-4">
+            Select {{ currentField === 'workingHours' ? 'Working Hours' : 'Block Times' }}
+          </h3>
 
         <div class="mb-3">
             <label class="block text-sm mb-1">Start Time</label>
