@@ -42,19 +42,31 @@
                                 </span>
                             </div>
                         </div>
+                        
                         <div class="relative w-1/3">
-                            <input id="working-hours" type="text" placeholder=" " formControlName="workingHours"
-                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
-                            <label for="working-hours"
-                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">
-                                Working Hours
-                            </label>
-                            <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
-                                <span *ngIf="staffForm.get('workingHours')?.touched && staffForm.get('workingHours')?.hasError('required')">
-                                    Working hours are required
-                                </span>
+                            <label for="working-hours" class="block text-xs text-[#271E4A] mb-1">Working Hours</label>
+                          
+                            <div class="flex flex-wrap gap-2 border-b border-[#271E4A] py-2">
+                              <div *ngFor="let range of timeRanges; let i = index"
+                                   class="bg-gray-200 px-2 py-1 rounded-full text-sm flex items-center">
+                                {{ range.start }} - {{ range.end }}
+                                <span class="ml-2 cursor-pointer" (click)="removeRange(i)">×</span>
+                              </div>
+                          
+                              <button type="button" (click)="openTimeRangePicker()"
+                                      class="text-purple-600 text-xl focus:outline-none ml-auto">
+                                <i class="ri-time-line"></i>
+                              </button>
                             </div>
-                        </div>
+                          
+                            <input type="hidden" formControlName="workingHours" />
+                          
+                            <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
+                              <span *ngIf="staffForm.get('workingHours')?.touched && staffForm.get('workingHours')?.hasError('required')">
+                                Working hours are required
+                              </span>
+                            </div>
+                          </div>
                     </div>
 
                     <div class="flex flex-row gap-6 w-full">
@@ -222,3 +234,25 @@
         </div>
     </div>
 </div>
+
+                    <!-- Time Range Modal -->
+                    <div *ngIf="showTimePicker" class="fixed inset-0 bg-transparent bg-opacity-30 flex items-center justify-center z-50">
+                        <div class="bg-white p-6 rounded-xl shadow-lg w-80">
+                          <h3 class="text-md font-semibold mb-4">Select Working Hours</h3>
+                      
+                          <div class="mb-3">
+                            <label class="block text-sm mb-1">Start Time</label>
+                            <input type="time" [(ngModel)]="newStartTime" class="w-full border px-2 py-1 rounded" />
+                          </div>
+                      
+                          <div class="mb-4">
+                            <label class="block text-sm mb-1">End Time</label>
+                            <input type="time" [(ngModel)]="newEndTime" class="w-full border px-2 py-1 rounded" />
+                          </div>
+                      
+                          <div class="flex justify-end gap-2">
+                            <button class="px-3 py-1 text-sm bg-gray-300 rounded" (click)="closeTimePicker()">Cancel</button>
+                            <button class="px-3 py-1 text-sm bg-purple-600 text-white rounded" (click)="addTimeRange()">Add</button>
+                          </div>
+                        </div>
+                      </div>

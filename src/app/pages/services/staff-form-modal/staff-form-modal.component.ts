@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormsModule } from '@angular/forms';
 import { ApiserviceService } from '../../../services/apiservice/apiservice.service';
 import { environment } from '../../../../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-staff-form-modal',
-  imports: [CommonModule, NgSelectModule, ReactiveFormsModule],
+  imports: [CommonModule, NgSelectModule, ReactiveFormsModule, FormsModule ],
   templateUrl: './staff-form-modal.component.html',
   styleUrl: './staff-form-modal.component.css'
 })
@@ -22,6 +22,10 @@ export class StaffFormModalComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
 
   staffForm!: FormGroup;
+  timeRanges: { start: string, end: string }[] = [];
+  showTimePicker = false;
+  newStartTime = '';
+  newEndTime = '';
 
   constructor(private fb: FormBuilder) {
     this.staffForm = this.fb.group({
@@ -172,4 +176,39 @@ export class StaffFormModalComponent implements OnInit {
 
   selectedExpertise: any = null;
   selectedMultipleExpertise: any[] = [];
+
+  
+  // Open the popup
+  openTimeRangePicker() {
+    this.newStartTime = '';
+    this.newEndTime = '';
+    this.showTimePicker = true;
+  }
+  
+  // Close popup
+  closeTimePicker() {
+    this.showTimePicker = false;
+  }
+  
+  // Add the selected time range to the list
+  addTimeRange() {
+    if (this.newStartTime && this.newEndTime) {
+      this.timeRanges.push({ start: this.newStartTime, end: this.newEndTime });
+      this.updateWorkingHoursForm();
+      this.closeTimePicker();
+    }
+  }
+  
+  // Remove specific range
+  removeRange(index: number) {
+    this.timeRanges.splice(index, 1);
+    this.updateWorkingHoursForm();
+  }
+  
+  // Update hidden input value
+  updateWorkingHoursForm() {
+    const timeStrings = this.timeRanges.map(r => `${r.start} - ${r.end}`);
+    this.staffForm.get('workingHours')?.setValue(timeStrings.join(', '));
+  }
+  
 }
