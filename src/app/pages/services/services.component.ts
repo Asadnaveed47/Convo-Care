@@ -29,7 +29,7 @@ export class ServicesComponent {
   }
 
   loadStaff() {
-    const url = `${this.baseUrl}/api/v1/businesses/5/staff`;
+    const url = `${this.baseUrl}/api/v1/business/5/staff`;
     this.apiService.get(url).subscribe(response => {
       if (response.status === 1000) {
         this.staffList = response.data;
@@ -38,7 +38,7 @@ export class ServicesComponent {
   }
 
   loadServices() {
-    const url =  `${this.baseUrl}/api/v1/businesses/5/services`;
+    const url =  `${this.baseUrl}/api/v1/business/5/services`;
     this.apiService.get(url).subscribe(response => {
       if (response.status === 1000) {
         this.servicesList = response.data;

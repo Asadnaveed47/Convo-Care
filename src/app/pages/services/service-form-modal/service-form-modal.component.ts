@@ -65,10 +65,10 @@ export class ServiceFormModalComponent implements OnInit {
     };
 
     if (this.serviceToEdit?.id) {
-      const url = `${this.baseUrl}/api/v1/businesses/5/service/${this.serviceToEdit.id}`;
+      const url = `${this.baseUrl}/api/v1/business/5/service/${this.serviceToEdit.id}`;
       this.updateService(url, payload);
     } else {
-      const url = `${this.baseUrl}/api/v1/businesses/5/service`;
+      const url = `${this.baseUrl}/api/v1/business/5/service`;
       this.createService(url, payload);
     }
   }

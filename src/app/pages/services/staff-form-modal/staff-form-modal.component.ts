@@ -143,10 +143,10 @@ export class StaffFormModalComponent implements OnInit {
     }
 
     if (this.staffToEdit?.id) {
-      const url = `${this.baseUrl}/api/v1/businesses/5/staff/${this.staffToEdit.id}`;
+      const url = `${this.baseUrl}/api/v1/business/5/staff/${this.staffToEdit.id}`;
       this.updateStaff(url, payload);
     } else {
-      const url = `${this.baseUrl}/api/v1/businesses/5/staff`;
+      const url = `${this.baseUrl}/api/v1/business/5/staff`;
       this.createStaff(url, payload);
     }
   }
