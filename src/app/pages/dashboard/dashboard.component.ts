@@ -7,58 +7,68 @@ import { ApiserviceService } from '../../services/apiservice/apiservice.service'
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-dashboard',
-  imports: [BookingFormComponent, CommonModule, ColumnRotatedComponent, PieChartComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css',
-  standalone: true,
+    selector: 'app-dashboard',
+    imports: [BookingFormComponent, CommonModule, ColumnRotatedComponent, PieChartComponent],
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.css',
+    standalone: true,
 })
 export class DashboardComponent {
-  showModal = false;
-  cardDataMap: any = {};
-  graphData: any[] = [];
-  constructor(
-    private apiService: ApiserviceService,
 
-  ){
-  }
+    showModal = false;
+    cardDataMap: any = {};
+    graphData: any[] = [];
+    servicesBookedData: any[] = [];
+    patientInsightsData: any;
 
-  ngOnInit(){
-  this.getCards();
-  this.getgraphs();
-  }
+    constructor(
+        private apiService: ApiserviceService,
+    ) { }
 
-  getCards() {
-    const url = `${environment.baseUrl}/api/v1/analytics/cards?dashboard_id=MD&business_id=5`;
-    this.apiService.get(url).subscribe(response => {
-      if (response.status === 1000) {
-        this.cardDataMap = response.data.reduce((acc: any, item: any) => {
-          acc[item.code] = item.data;
-          return acc;
-        }, {});
+    ngOnInit() {
+        this.getCards();
+        this.getgraphs();
+    }
+
+    getCards() {
+        const url = `${environment.baseUrl}/api/v1/analytics/cards?dashboard_id=MD&business_id=5`;
+        this.apiService.get(url).subscribe(response => {
+            if (response.status === 1000) {
+                this.cardDataMap = response.data.reduce((acc: any, item: any) => {
+                    acc[item.code] = item.data;
+                    return acc;
+                }, {});
+            }
+        });
+    }
+
+    getgraphs() {
+        const url = `${environment.baseUrl}/api/v1/analytics/graphs?dashboard_id=MD&business_id=5`;
+        this.apiService.get(url).subscribe(response => {
+          if (response.status === 1000) {
+            const servicesBooked = response.data.find((item: { code: string; data: any }) => item.code === 'SB');
+            const patientInsights = response.data.find((item: { code: string; data: any }) => item.code === 'PI');
+      
+            this.servicesBookedData = servicesBooked?.data || [];
+            this.patientInsightsData = patientInsights?.data || {};
+            console.log("patientInsightsData",this.patientInsightsData);
+            
+          }
+        });
       }
-    });
-  }
-  getgraphs() {
-    const url = `${environment.baseUrl}/api/v1/analytics/graphs?dashboard_id=MD&business_id=5`;
-    this.apiService.get(url).subscribe(response => {
-      if (response.status === 1000) {
-        this.graphData = response.data;
-      }
-    });
-  }
+      
 
-  addBooking() {
-    this.showModal = true;
-    console.log('Add Booking button clicked');
-    
-  }
+    addBooking() {
+        this.showModal = true;
+        console.log('Add Booking button clicked');
 
-  closeModal() {
-    this.showModal = false;
-  }
+    }
 
-  handleBookingAdded(newStaff: any) {
-    console.log('New Booking added:', newStaff);
-  }
+    closeModal() {
+        this.showModal = false;
+    }
+
+    handleBookingAdded(newStaff: any) {
+        console.log('New Booking added:', newStaff);
+    }
 }
