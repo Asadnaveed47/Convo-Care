@@ -156,29 +156,30 @@
 
                         <div class="relative w-1/2">
                             <label for="block-times" class="block text-xs text-[#271E4A] mb-1">Block Times</label>
-                          
+
                             <div class="flex flex-wrap gap-2 border-b border-[#271E4A] py-2">
-                              <div *ngFor="let range of blockTimeRanges; let i = index"
-                                   class="bg-gray-200 px-2 py-1 rounded-full text-sm flex items-center">
-                                {{ range.start }} - {{ range.end }}
-                                <span class="ml-2 cursor-pointer" (click)="removeRange(i, 'blockTimes')">×</span>
-                              </div>
-                          
-                              <button type="button" (click)="openTimeRangePicker('blockTimes')"
-                                      class="text-purple-600 text-xl focus:outline-none ml-auto">
-                                <i class="ri-time-line"></i>
-                              </button>
+                                <div *ngFor="let range of blockTimeRanges; let i = index"
+                                    class="bg-gray-200 px-2 py-1 rounded-full text-sm flex items-center">
+                                    {{ range.start }} - {{ range.end }}
+                                    <span class="ml-2 cursor-pointer" (click)="removeRange(i, 'blockTimes')">×</span>
+                                </div>
+
+                                <button type="button" (click)="openTimeRangePicker('blockTimes')"
+                                    class="text-purple-600 text-xl focus:outline-none ml-auto">
+                                    <i class="ri-time-line"></i>
+                                </button>
                             </div>
-                          
+
                             <input type="hidden" formControlName="blockTimes" />
-                          
+
                             <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
-                              <span *ngIf="staffForm.get('blockTimes')?.touched && staffForm.get('blockTimes')?.hasError('required')">
-                                Block times are required
-                              </span>
+                                <span
+                                    *ngIf="staffForm.get('blockTimes')?.touched && staffForm.get('blockTimes')?.hasError('required')">
+                                    Block times are required
+                                </span>
                             </div>
-                          </div>
-                          
+                        </div>
+
                     </div>
 
                     <div class="flex flex-col justify-center items-start w-full">
@@ -212,7 +213,7 @@
                                     </div>
                                     <div class="relative w-1/3">
                                         <input id="duration-{{i}}" type="text" placeholder=" "
-                                            formControlName="duration"
+                                            formControlName="duration_minutes"
                                             class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none" />
                                         <label for="duration-{{i}}"
                                             class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">
@@ -220,7 +221,7 @@
                                         </label>
                                         <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
                                             <span
-                                                *ngIf="item.get('duration')?.touched && item.get('duration')?.hasError('required')">
+                                                *ngIf="item.get('duration_minutes')?.touched && item.get('duration_minutes')?.hasError('required')">
                                                 Duration is required
                                             </span>
                                         </div>
@@ -269,7 +270,15 @@
     <div class="bg-white p-6 rounded-xl shadow-lg w-80">
         <h3 class="text-md font-semibold mb-4">
             Select {{ currentField === 'workingHours' ? 'Working Hours' : 'Block Times' }}
-          </h3>
+        </h3>
+
+        <div class="mb-3">
+            <label class="block text-sm mb-1">Select Day</label>
+            <select [(ngModel)]="selectedDay" class="w-full border px-2 py-1 rounded">
+                <option value="" disabled selected>Select Day</option>
+                <option *ngFor="let day of daysOfWeek" [value]="day">{{ day }}</option>
+            </select>
+        </div>
 
         <div class="mb-3">
             <label class="block text-sm mb-1">Start Time</label>
