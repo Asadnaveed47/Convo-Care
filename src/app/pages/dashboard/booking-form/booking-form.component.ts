@@ -32,7 +32,7 @@ export class BookingFormComponent implements OnInit {
       customer_phone: ['', [Validators.required, Validators.pattern(/^[0-9\-\+]{9,15}$/)]],
       start_time: ['', Validators.required],
       end_time: ['', Validators.required],
-      status: ['', Validators.required],
+      // status: ['', Validators.required],
       notes: ['']
     });
   }
@@ -60,30 +60,31 @@ export class BookingFormComponent implements OnInit {
       this.markFormGroupTouched(this.bookingForm);
       return;
     }
-
+  
     const payload = this.bookingForm.value;
-
-    if (this.bookingToEdit?.id) {
-      const url = `${this.baseUrl}/api/v1/business/5/appointments/${this.bookingToEdit.id}`;
-      this.apiService.edit(url, payload).subscribe({
-        next: () => {
-          this.bookingForm.reset();
-          this.closeModal();
-        },
-        error: (err) => console.error('Error updating booking:', err)
-      });
-    } else {
-      const url = `${this.baseUrl}/api/v1/business/5/appointments`;
-      this.apiService.create(url, payload).subscribe({
-        next: () => {
-          this.bookingForm.reset();
-          this.closeModal();
-        },
-        error: (err) => console.error('Error creating booking:', err)
-      });
-    }
+    const businessId = 5;
+    const url = this.bookingToEdit?.id
+      ? `${this.baseUrl}/api/v1/business/${businessId}/appointments/${this.bookingToEdit.id}`
+      : `${this.baseUrl}/api/v1/business/${businessId}/appointments`;
+  
+    const request$ = this.bookingToEdit?.id
+      ? this.apiService.edit(url, payload)
+      : this.apiService.create(url, payload);
+  
+    request$.subscribe({
+      next: () => this.handleSuccess(),
+      error: (err) => {
+        console.error('Booking error:', err);
+        // Optional: show a toast/snackbar here
+      }
+    });
   }
-
+  
+  private handleSuccess(): void {
+    this.bookingForm.reset();
+    this.closeModal();
+  }
+  
   markFormGroupTouched(formGroup: FormGroup): void {
     Object.values(formGroup.controls).forEach(control => control.markAsTouched());
   }
