@@ -87,10 +87,10 @@ export class BusinessFormComponent {
     
 
     if (this.data && this.data.id) {
-        const url = `${environment.baseUrl}/api/v1/businesses?id=${this.data.id}`;
+        const url = `${environment.baseUrl}/api/v1/business?id=${this.data.id}`;
         this.updateBusinessForm(url, payload);
     } else {
-        const url = `${environment.baseUrl}/api/v1/businesses`;
+        const url = `${environment.baseUrl}/api/v1/business`;
         this.createBusinessForm(url, payload);
     }
   }

@@ -1,137 +1,150 @@
 <div class="flex flex-col justify-center items-center gap-4">
+    <!-- Tabs -->
     <div class="flex flex-row justify-start items-center w-full gap-2">
-        <button (click)="activeTab = 'staff'" [ngClass]="{
-          'bg-[#8879CA] text-white': activeTab === 'staff',
-          'bg-[#F0F1F3] text-[#8879CA]': activeTab !== 'staff'
-        }" class="cursor-pointer text-sm rounded-xl px-2.5 py-1.5">
-            Staff
-        </button>
-
-        <button (click)="activeTab = 'service'" [ngClass]="{
-          'bg-[#8879CA] text-white': activeTab === 'service',
-          'bg-[#F0F1F3] text-[#8879CA]': activeTab !== 'service'
-        }" class="cursor-pointer text-sm rounded-xl px-2.5 py-1.5">
-            Services
-        </button>
+      <button (click)="activeTab = 'staff'" [ngClass]="{
+        'bg-[#8879CA] text-white': activeTab === 'staff',
+        'bg-[#F0F1F3] text-[#8879CA]': activeTab !== 'staff'
+      }" class="cursor-pointer text-sm rounded-xl px-2.5 py-1.5">Staff</button>
+  
+      <button (click)="activeTab = 'service'" [ngClass]="{
+        'bg-[#8879CA] text-white': activeTab === 'service',
+        'bg-[#F0F1F3] text-[#8879CA]': activeTab !== 'service'
+      }" class="cursor-pointer text-sm rounded-xl px-2.5 py-1.5">Services</button>
     </div>
-
+  
+    <!-- STAFF TABLE -->
     <div *ngIf="activeTab === 'staff'" class="bg-white rounded-xl py-4 px-10 w-full shadow-lg">
-        <div class="flex flex-row justify-between items-center w-full">
-            <h5 class="text-4xl font-bold text-[#271E4A]">Staff</h5>
-            <button (click)="openStaffModal()"
-                class="flex flex-row justify-center items-center cursor-pointer gap-2 bg-[#8879CA] rounded-2xl text-white px-2.5 py-0.5 shadow-xl">
-                <img [src]="'assets/icons/add.png'" alt="" class="w-5 h-auto">
-                <span class="text-xs">New Staff</span>
-            </button>
-        </div>
-
-        <table class="w-full border-collapse text-left mt-4">
-            <thead>
-                <tr class="bg-[#EDF4FC] text-[#271E4A] text-center">
-                    <th class="p-2">#</th>
-                    <th class="p-2 font-semibold w-48">Name</th>
-                    <th class="p-2 font-semibold">Expertise</th>
-                    <th class="p-2 font-semibold">Allocated Services</th>
-                    <th class="p-2 font-semibold w-48">Allowed Appointments</th>
-                    <th class="p-2 font-semibold">Joined At</th>
-                    <th class="p-2 font-semibold">Action</th>
-                </tr>
-            </thead>
-
-            <tbody class="text-center text-sm font-semibold text-[#271E4A]">
-                <tr *ngFor="let staff of staffList" class="border-b border-[#E0E9F4]">
-                    <td class="text-[#0998FF] py-3 px-1">{{ staff.id }}</td>
-                    <td class="py-3 px-1">{{ staff.name }}</td>
-                    <td class="py-3 px-1">
-                        {{staff.bio}}
-                        <!--
-                        <div class="flex flex-row justify-center items-center gap-1 ">
-                            <div class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal"></div>
-                            <div class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal">Ultrasound
-                            </div>
-                        </div>
-                        -->
-                    </td>
-                    <td class="py-3 px-1">
-                        <div class="flex flex-row justify-center items-center gap-1 ">
-                            <div *ngFor="let allocated_service of staff.allocated_services"
-                                class="bg-[#C4C4C4] text-xs rounded py-0.5 px-1 text-gray-50 font-normal">
-                                {{allocated_service.service_name}}</div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-1">{{staff.max_appointments_per_day}}</td>
-                    <td class="py-3 px-1">12.05.2025</td>
-                    <td class="py-3 px-1">
-                        <div class="flex flex-row justify-center items-center gap-2">
-                            <button class="shadow-xl rounded-lg p-2 cursor-pointer">
-                                <img [src]="'assets/icons/edit.png'" alt="" class="w-4 h-auto">
-                            </button>
-                            <button class="shadow-xl rounded-lg p-2 cursor-pointer">
-                                <img [src]="'assets/icons/delete.png'" alt="" class="w-4 h-auto">
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <div class="flex flex-row justify-between items-center w-full">
+        <h5 class="text-4xl font-bold text-[#271E4A]">Staff</h5>
+        <button (click)="openStaffModal()" class="flex flex-row justify-center items-center gap-2 bg-[#8879CA] rounded-2xl text-white px-2.5 py-0.5 shadow-xl">
+          <img [src]="'assets/icons/add.png'" class="w-5 h-auto" />
+          <span class="text-xs">New Staff</span>
+        </button>
+      </div>
+  
+      <table class="w-full border-collapse text-left mt-4">
+        <thead>
+          <tr class="bg-[#EDF4FC] text-[#271E4A] text-center">
+            <th class="p-2">#</th>
+            <th class="p-2 font-semibold w-48">Name</th>
+            <th class="p-2 font-semibold">Expertise</th>
+            <th class="p-2 font-semibold">Allocated Services</th>
+            <th class="p-2 font-semibold w-48">Allowed Appointments</th>
+            <th class="p-2 font-semibold">Joined At</th>
+            <th class="p-2 font-semibold">Action</th>
+          </tr>
+        </thead>
+        <tbody class="text-center text-sm font-semibold text-[#271E4A]">
+          <tr *ngFor="let staff of staffList.slice((currentPageStaff - 1) * itemsPerPageStaff, currentPageStaff * itemsPerPageStaff)" class="border-b border-[#E0E9F4]">
+            <td class="text-[#0998FF] py-3 px-1">{{ staff.id }}</td>
+            <td class="py-3 px-1">{{ staff.name }}</td>
+            <td class="py-3 px-1">{{ staff.bio }}</td>
+            <td class="py-3 px-1">
+              <div class="flex flex-row justify-center items-center gap-1">
+                <div *ngFor="let allocated_service of staff.allocated_services"
+                  class="bg-[#C4C4C4] text-xs rounded p-0.5 text-gray-50 font-normal">
+                  {{allocated_service.service_name}}
+                </div>
+              </div>
+            </td>
+            <td class="py-3 px-1">{{staff.max_appointments_per_day}}</td>
+            <td class="py-3 px-1 w-32">12.05.2025</td>
+            <td class="py-3 px-1">
+              <div class="flex flex-row justify-center items-center gap-2">
+                <button class="shadow-xl rounded-lg p-2"><img [src]="'assets/icons/edit.png'" class="w-4 h-auto" /></button>
+                <button (click)="deleteStaff(staff.id)" class="shadow-xl rounded-lg p-2"><img [src]="'assets/icons/delete.png'" class="w-4 h-auto" /></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- Staff Pagination -->
+      <div class="flex justify-end items-center gap-2 mt-4">
+        <button (click)="currentPageStaff = 1" [disabled]="currentPageStaff === 1" class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">«</button>
+        <button (click)="currentPageStaff = currentPageStaff - 1" [disabled]="currentPageStaff === 1" class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">‹</button>
+  
+        <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+          <button *ngIf="shouldShowPage(i + 1)" (click)="currentPageStaff = i + 1" [ngClass]="{
+            'bg-purple-500 text-white': currentPageStaff === i + 1,
+            'bg-white text-gray-700 hover:bg-gray-100': currentPageStaff !== i + 1
+          }" class="w-8 h-8 rounded-full border border-gray-300 cursor-pointer text-xs">
+            {{ i + 1 }}
+          </button>
+        </ng-container>
+  
+        <button (click)="currentPageStaff = currentPageStaff + 1" [disabled]="currentPageStaff >= totalPages" class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">›</button>
+        <button (click)="currentPageStaff = totalPages" [disabled]="currentPageStaff >= totalPages" class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">»</button>
+      </div>
     </div>
-
+  
+    <!-- SERVICES TABLE -->
     <div *ngIf="activeTab === 'service'" class="bg-white rounded-xl py-4 px-10 w-full shadow-lg">
-        <div class="flex flex-row justify-between items-center w-full">
-            <h5 class="text-4xl font-bold text-[#271E4A]">Services</h5>
-            <button (click)="openServiceModal()"
-                class="flex flex-row justify-center items-center cursor-pointer gap-2 bg-[#8879CA] rounded-2xl text-white px-2.5 py-0.5 shadow-xl">
-                <img [src]="'assets/icons/add.png'" alt="" class="w-5 h-auto">
-                <span class="text-xs">New Service</span>
-            </button>
-        </div>
-
-        <table class="w-full border-collapse text-left mt-4">
-            <thead>
-                <tr class="bg-[#EDF4FC] text-[#271E4A] text-center">
-                    <th class="p-2">#</th>
-                    <th class="p-2 font-semibold">Name</th>
-                    <th class="p-2 font-semibold">Category</th>
-                    <th class="p-2 font-semibold">Description</th>
-                    <th class="p-2 font-semibold">Status</th>
-                    <th class="p-2 font-semibold">Action</th>
-                </tr>
-            </thead>
-
-            <tbody class="text-center text-sm font-semibold text-[#271E4A]">
-                <tr *ngFor="let services of servicesList" class="border-b border-[#E0E9F4]">
-                    <td class="text-[#0998FF] py-3 px-1">{{ services.id }}</td>
-                    <td class="py-3 px-1">{{ services.name }}</td>
-                    <td class="py-3 px-1">{{services.category}}</td>
-                    <td class="py-3 px-1">{{ services.description }}</td>
-                    <td class="py-3 px-1 text-center">
-                        <div class="flex justify-center items-center">
-                            <div class="rounded px-1 py-1 text-white font-normal"
-                                [ngClass]="{
-                                'bg-[#4BCB70]': services.status === '1',
-                                'bg-red-500': services.status !== '1'}">
-                                {{ services.status === '1' ? 'Active' : 'Inactive' }}
-                            </div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-1">
-                        <div class="flex flex-row justify-center items-center gap-2">
-                            <button class="shadow-xl rounded-lg p-2 cursor-pointer">
-                                <img [src]="'assets/icons/edit.png'" alt="" class="w-4 h-auto">
-                            </button>
-                            <button class="shadow-xl rounded-lg p-2 cursor-pointer">
-                                <img [src]="'assets/icons/delete.png'" alt="" class="w-4 h-auto">
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <div class="flex flex-row justify-between items-center w-full">
+        <h5 class="text-4xl font-bold text-[#271E4A]">Services</h5>
+        <button (click)="openServiceModal()" class="flex flex-row justify-center items-center gap-2 bg-[#8879CA] rounded-2xl text-white px-2.5 py-0.5 shadow-xl">
+          <img [src]="'assets/icons/add.png'" class="w-5 h-auto" />
+          <span class="text-xs">New Service</span>
+        </button>
+      </div>
+  
+      <table class="w-full border-collapse text-left mt-4">
+        <thead>
+          <tr class="bg-[#EDF4FC] text-[#271E4A] text-center">
+            <th class="p-2">#</th>
+            <th class="p-2 font-semibold">Name</th>
+            <th class="p-2 font-semibold">Category</th>
+            <th class="p-2 font-semibold">Description</th>
+            <th class="p-2 font-semibold">Status</th>
+            <th class="p-2 font-semibold">Action</th>
+          </tr>
+        </thead>
+        <tbody class="text-center text-sm font-semibold text-[#271E4A]">
+          <tr *ngFor="let services of servicesList.slice((currentPageService - 1) * itemsPerPageService, currentPageService * itemsPerPageService)" class="border-b border-[#E0E9F4]">
+            <td class="text-[#0998FF] py-3 px-1">{{ services.id }}</td>
+            <td class="py-3 px-1">{{ services.name }}</td>
+            <td class="py-3 px-1">{{ services.category }}</td>
+            <td class="py-3 px-1">{{ services.description }}</td>
+            <td class="py-3 px-1 text-center">
+              <div class="flex justify-center items-center">
+                <div class="rounded px-1 py-1 text-white font-normal" [ngClass]="{
+                  'bg-[#4BCB70]': services.status === '1',
+                  'bg-red-500': services.status !== '1'
+                }">
+                  {{ services.status === '1' ? 'Active' : 'Inactive' }}
+                </div>
+              </div>
+            </td>
+            <td class="py-3 px-1">
+              <div class="flex flex-row justify-center items-center gap-2">
+                <button class="shadow-xl rounded-lg p-2"><img [src]="'assets/icons/edit.png'" class="w-4 h-auto" /></button>
+                <button class="shadow-xl rounded-lg p-2"><img [src]="'assets/icons/delete.png'" class="w-4 h-auto" /></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- Services Pagination -->
+      <div class="flex justify-end items-center gap-2 mt-4">
+        <button (click)="currentPageService = 1" [disabled]="currentPageService === 1" class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">«</button>
+        <button (click)="currentPageService = currentPageService - 1" [disabled]="currentPageService === 1" class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">‹</button>
+  
+        <ng-container *ngFor="let page of [].constructor(totalServicePages); let i = index">
+          <button *ngIf="shouldShowServicePage(i + 1)" (click)="currentPageService = i + 1" [ngClass]="{
+            'bg-purple-500 text-white': currentPageService === i + 1,
+            'bg-white text-gray-700 hover:bg-gray-100': currentPageService !== i + 1
+          }" class="w-8 h-8 rounded-full border border-gray-300 cursor-pointer text-xs">
+            {{ i + 1 }}
+          </button>
+        </ng-container>
+  
+        <button (click)="currentPageService = currentPageService + 1" [disabled]="currentPageService >= totalServicePages" class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">›</button>
+        <button (click)="currentPageService = totalServicePages" [disabled]="currentPageService >= totalServicePages" class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">»</button>
+      </div>
     </div>
-</div>
-
-<app-staff-form-modal [show]="modalType === 'staff'" (close)="closeModal()">
-</app-staff-form-modal>
-
-<app-service-form-modal  [show]="modalType === 'service'" (close)="closeModal()">
-</app-service-form-modal>
+  </div>
+  
+  <app-staff-form-modal [show]="modalType === 'staff'" (close)="closeModal()"></app-staff-form-modal>
+  <app-service-form-modal [show]="modalType === 'service'" (close)="closeModal()"></app-service-form-modal>
+  

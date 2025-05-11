@@ -15,7 +15,8 @@ import { environment } from '../../../environments/environment';
   styleUrl: './services.component.css'
 })
 export class ServicesComponent {
-  constructor() { }
+  Math = Math;
+  constructor() {}
 
   private apiService = inject(ApiserviceService);
   private baseUrl = environment.baseUrl;
@@ -29,7 +30,7 @@ export class ServicesComponent {
   }
 
   loadStaff() {
-    const url = `${this.baseUrl}/api/v1/businesses/5/staff`;
+    const url = `${this.baseUrl}/api/v1/business/5/staff`;
     this.apiService.get(url).subscribe(response => {
       if (response.status === 1000) {
         this.staffList = response.data;
@@ -38,7 +39,7 @@ export class ServicesComponent {
   }
 
   loadServices() {
-    const url =  `${this.baseUrl}/api/v1/businesses/5/services`;
+    const url = `${this.baseUrl}/api/v1/business/5/services`;
     this.apiService.get(url).subscribe(response => {
       if (response.status === 1000) {
         this.servicesList = response.data;
@@ -46,12 +47,17 @@ export class ServicesComponent {
     });
   }
 
-  // ------------------------------------------ //
+  deleteStaff(staffId: number) {
+    const url = `${this.baseUrl}/api/v1/business/5/staff/${staffId}`;
+    this.apiService.delete(url).subscribe(response => {
+      if (response.status === 1000) {
+        this.loadStaff(); 
+      }
+    });
+  }
 
-  activeTab: 'staff' | 'service' = 'staff'; 
-
-  // ------------------------------------------ //
-
+  // Tabs and modals
+  activeTab: 'staff' | 'service' = 'staff';
   modalType: 'staff' | 'service' | null = null;
 
   openStaffModal() {
@@ -64,5 +70,39 @@ export class ServicesComponent {
 
   closeModal() {
     this.modalType = null;
+  }
+
+  // Pagination - Staff
+  currentPageStaff = 1;
+  itemsPerPageStaff = 5;
+
+  get totalPages(): number {
+    return Math.ceil(this.staffList.length / this.itemsPerPageStaff);
+  }
+
+  shouldShowPage(page: number): boolean {
+    const current = this.currentPageStaff;
+    return (
+      page === 1 ||
+      page === this.totalPages ||
+      Math.abs(current - page) <= 1
+    );
+  }
+
+  // Pagination - Services
+  currentPageService = 1;
+  itemsPerPageService = 5;
+
+  get totalServicePages(): number {
+    return Math.ceil(this.servicesList.length / this.itemsPerPageService);
+  }
+
+  shouldShowServicePage(page: number): boolean {
+    const current = this.currentPageService;
+    return (
+      page === 1 ||
+      page === this.totalServicePages ||
+      Math.abs(current - page) <= 1
+    );
   }
 }
