@@ -16,6 +16,8 @@ am4core.useTheme(am4themes_animated);
 export class PieChartComponent implements OnInit, OnChanges {
   @Input() insightData: any = {};
   chart: am4charts.PieChart | undefined;
+  chartData: any[] = [];
+  showNoGraphImage: boolean = false;
 
   ngOnInit() {
     this.generateChart();
@@ -41,21 +43,21 @@ export class PieChartComponent implements OnInit, OnChanges {
     const repeatPatients = this.insightData?.old_customers || 0;
   
     // Set up chart data
-    let chartData = [];
+    this.chartData = [];
   
     if (newPatients === 0 && repeatPatients === 0) {
-      chartData = [
-        { sector: "No Data", size: 0 }
+      this.showNoGraphImage = true; 
+      this.chartData = [
       ];
     } else {
-      chartData = [
+      this.chartData = [
         { sector: "New Patient", size: newPatients },
         { sector: "Repeat Patient", size: repeatPatients }
       ];
     }
   
     // Assign data to chart
-    chart.data = chartData;
+    chart.data = this.chartData;
   
     // Add inner radius and center label
     chart.innerRadius = am4core.percent(40);
