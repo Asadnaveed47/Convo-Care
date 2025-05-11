@@ -61,6 +61,25 @@
   <div *ngIf="activeTab === 'list'" class="bg-white p-4 rounded shadow">
     <!-- Replace this with actual list view content -->
     <p class="text-gray-600">List view of appointments will be shown here.</p>
+    <table class="w-full border-collapse text-left mt-4">
+      <thead>
+          <tr class="bg-[#EDF4FC] text-[#271E4A] text-center">
+      
+              <th class="p-2 font-semibold w-48">Staff Name</th>
+              <th class="p-2 font-semibold">Completed</th>
+              <th class="p-2 font-semibold">Pending</th>
+              <th class="p-2 font-semibold w-48">Cancel</th>
+          </tr>
+      </thead>
+
+      <tbody class="text-center text-sm font-semibold text-[#271E4A]">
+          <tr *ngFor="let list of listData" class="border-b border-[#E0E9F4]">
+              <td class="py-3 px-1">{{ list.staff_name }}</td>
+              <td class="py-3 px-1">{{list.max_appointments_per_day}}</td>
+             
+          </tr>
+      </tbody>
+  </table>
     
   </div>
 </div>

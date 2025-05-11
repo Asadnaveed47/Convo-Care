@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
 import { FormsModule } from '@angular/forms';
 
@@ -8,6 +8,8 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarOptions } from '@fullcalendar/core/index.js';
 import { BookingFormComponent } from "../dashboard/booking-form/booking-form.component";
+import { environment } from '../../../environments/environment';
+import { ApiserviceService } from '../../services/apiservice/apiservice.service';
 
 @Component({
     // imports: [CommonModule, FormsModule],
@@ -23,6 +25,9 @@ export class AppointmentCalendarComponent {
     currentDateTime: string = '';
     showModal = false;
     activeTab: 'calendar' | 'list' = 'calendar';
+    private apiService = inject(ApiserviceService);
+    private baseUrl = environment.baseUrl;
+    listData: any[] = [];
 
 
     calendarOptions: CalendarOptions = {
@@ -50,12 +55,24 @@ export class AppointmentCalendarComponent {
     };
 
     ngOnInit() {
+        this.getAllAppointments();
         this.updateCurrentDateTime();
         setInterval(() => this.updateCurrentDateTime(), 60000); // Update every minute
     }
+
+    getAllAppointments() {
+        const url = `${this.baseUrl}/api/v1/business/5/appointments`;
+        this.apiService.get(url).subscribe(response => {
+          if (response.status === 1000) {
+            this.listData = response.data;
+          }
+        });
+      }
+
     ngAfterViewInit() {
         this.calendarApi = this.calendarComponent.getApi();
     }
+
     updateCurrentDateTime() {
         const now = new Date();
         this.currentDateTime = now.toLocaleString('en-US', {
