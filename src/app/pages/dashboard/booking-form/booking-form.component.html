@@ -1,12 +1,12 @@
 <div class="fixed inset-0 backdrop-blur-md bg-gradient-to-r from-[#EFF2F6] via-[#F6E3EB] to-[#D5DEED] z-40 opacity-80"
-    (click)="closeModal()">
+    (click)="onClose()">
 </div>
 
 <div class="fixed inset-0 z-50 flex items-center justify-center px-4" *ngIf="show">
     <div class="w-full max-w-5xl">
         <div class="bg-white rounded-3xl w-full p-8 shadow-2xl relative">
             <button class="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold"
-                (click)="closeModal()">
+                (click)="onClose()">
                 &times;
             </button>
             <h5 class="text-[#271E4A] text-2xl font-bold text-left">Booking</h5>

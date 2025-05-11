@@ -13,7 +13,7 @@ import { ApiserviceService } from '../../../services/apiservice/apiservice.servi
 })
 export class BookingFormComponent implements OnInit {
   @Input() bookingToEdit?: any;
-  @Output() close = new EventEmitter<void>();
+  @Output() modalClosed = new EventEmitter<void>();
   @Output() show = new EventEmitter<void>();
   @Input() appointmentData: any;
 
@@ -82,14 +82,16 @@ export class BookingFormComponent implements OnInit {
   
   private handleSuccess(): void {
     this.bookingForm.reset();
-    this.closeModal();
+    this.onClose();
   }
   
   markFormGroupTouched(formGroup: FormGroup): void {
     Object.values(formGroup.controls).forEach(control => control.markAsTouched());
   }
 
-  closeModal(): void {
-    this.close.emit();
+  onClose(): void {
+    this.modalClosed.emit();
+    console.log("close event emitted");
+    
   }
 }

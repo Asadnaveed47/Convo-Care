@@ -23,7 +23,7 @@ export class AppointmentCalendarComponent {
 
     private calendarApi: any;
     currentDateTime: string = '';
-    showModal = false;
+    showModal: boolean = false;
     activeTab: 'calendar' | 'list' = 'calendar';
     private apiService = inject(ApiserviceService);
     private baseUrl = environment.baseUrl;
