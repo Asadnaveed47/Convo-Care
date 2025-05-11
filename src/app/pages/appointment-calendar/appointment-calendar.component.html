@@ -84,5 +84,9 @@
   </div>
 </div>
 
-<app-booking-form *ngIf="showModal" (modalClosed)="closeModal()" (staffAdded)="handleBookingAdded($event)">
+<app-booking-form
+  *ngIf="showModal"
+  [appointmentData]="selectedAppointment"
+  (modalClosed)="closeModal()"
+  (staffAdded)="handleBookingAdded($event)">
 </app-booking-form>

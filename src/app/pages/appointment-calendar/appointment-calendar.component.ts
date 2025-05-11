@@ -28,6 +28,7 @@ export class AppointmentCalendarComponent {
     private apiService = inject(ApiserviceService);
     private baseUrl = environment.baseUrl;
     listData: any[] = [];
+    selectedAppointment: any = null;
 
 
     calendarOptions: CalendarOptions = {
@@ -41,17 +42,13 @@ export class AppointmentCalendarComponent {
         slotMinTime: '00:00:00',
         slotMaxTime: '24:00:00',
         slotDuration: '00:30:00',
-        events: [
-            { title: 'Meeting', start: '2025-05-05T16:00:00' },
-            { title: 'Launch', start: '2025-05-06T10:30:00' },
-            { title: 'Conference', start: '2025-05-06T10:30:00' },
-            { title: 'Workshop', start: '2025-05-08T14:00:00' },
-            { title: 'Webinar', start: '2025-05-09T09:00:00' },
-            { title: 'Networking', start: '2025-05-06T10:30:00' },
-            { title: 'Team Building', start: '2025-05-11T13:00:00' },
-            { title: 'Training', start: '2025-05-12T15:00:00' },
-            { title: 'Seminar', start: '2025-05-13T17:00:00' },
-        ]
+        events: [],
+        eventClick: (info) => {
+            const appointmentId = parseInt(info.event.id, 10);
+            this.selectedAppointment = this.listData.find(appt => appt.id === appointmentId);
+            this.showModal = true;
+          }
+          
     };
 
     ngOnInit() {
@@ -65,8 +62,27 @@ export class AppointmentCalendarComponent {
         this.apiService.get(url).subscribe(response => {
           if (response.status === 1000) {
             this.listData = response.data;
+      
+            // Convert to FullCalendar events
+            const events = this.listData.map((appointment: any) => ({
+              id: appointment.id.toString(),
+              title: `${appointment.service_name} - ${appointment.staff_name}`,
+              start: appointment.start_time,
+              end: appointment.end_time,
+              extendedProps: {
+                notes: appointment.notes,
+                appointment_status: appointment.appointment_status,
+                business_name: appointment.business_name
+              }
+            }));
+      
+            this.calendarOptions.events = events;
           }
         });
+      }
+      
+      addBooking() {
+          this.showModal = true;
       }
 
     ngAfterViewInit() {
@@ -90,8 +106,8 @@ export class AppointmentCalendarComponent {
         this.currentView = view;
         this.calendarApi?.changeView(view);
         this.calendarApi = this.calendarComponent.getApi();
-      }
-
+    }
+    
     next() {
         this.calendarApi?.next();
     }
@@ -104,11 +120,6 @@ export class AppointmentCalendarComponent {
         this.calendarApi?.today();
     }
 
-    addBooking() {
-        this.showModal = true;
-        console.log('Add Booking button clicked');
-
-    }
 
     closeModal() {
         this.showModal = false;
