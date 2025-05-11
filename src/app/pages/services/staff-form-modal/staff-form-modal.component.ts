@@ -26,6 +26,12 @@ export class StaffFormModalComponent implements OnInit {
     showTimePicker = false;
     newStartTime = '';
     newEndTime = '';
+    selectedLanguage: any = null;
+    selectedExpertise: any = null;
+    selectedMultipleExpertise: any[] = [];
+    expertise: any[] = [];
+    languages: any[] = [];
+    services: any[] = [];
 
     blockTimeRanges: { start: string; end: string }[] = [];
     currentField: 'workingHours' | 'blockTimes' = 'workingHours';
@@ -45,6 +51,24 @@ export class StaffFormModalComponent implements OnInit {
             blockTimes: ['', [Validators.required]],
             allocated_services: this.fb.array([this.createServiceGroup()])
         });
+
+        this.expertise = [
+            { id: 1, name: 'X-ray' },
+            { id: 2, name: 'Consultation' }
+        ];
+    
+        this.languages = [
+            { id: 1, name: 'English' },
+            { id: 2, name: 'Urdu' },
+            { id: 3, name: 'Spanish' },
+        ];
+    
+        this.services = [
+            { id: 1, name: 'Generic Consultation' },
+            { id: 2, name: 'Daily Consultation' },
+            { id: 3, name: 'Generic Consultation' }
+        ];
+    
     }
 
     ngOnInit(): void {
@@ -180,27 +204,6 @@ export class StaffFormModalComponent implements OnInit {
             control.markAsTouched();
         });
     }
-
-    expertise = [
-        { id: 1, name: 'X-ray' },
-        { id: 2, name: 'Consultation' }
-    ];
-
-    languages = [
-        { id: 1, name: 'English' },
-        { id: 2, name: 'Urdu' },
-        { id: 3, name: 'Spanish' },
-    ];
-
-    services = [
-        { id: 1, name: 'Generic Consultation' },
-        { id: 2, name: 'Daily Consultation' },
-        { id: 3, name: 'Generic Consultation' }
-    ];
-
-    selectedLanguage: any = null;
-    selectedExpertise: any = null;
-    selectedMultipleExpertise: any[] = [];
 
     openTimeRangePicker(field: 'workingHours' | 'blockTimes') {
         this.currentField = field;
