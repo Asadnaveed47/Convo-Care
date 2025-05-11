@@ -29,10 +29,10 @@ export class BusinessFormComponent {
       name: ['', [Validators.required, Validators.minLength(2)]],
       businessType: ['', Validators.required],
       currency: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
+      phone_number: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
       workingHours: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      location: ['', Validators.required]
+      address: ['', Validators.required]
     });
 
      this.currenciesList = [
@@ -78,7 +78,7 @@ export class BusinessFormComponent {
         name: fd.name,
         email: fd.email,
         currency: fd.currency,
-        phone_number: fd.phone,
+        phone_number: fd.phone_number,
         business_Type: fd.businessType,
         working_hours: fd.workingHours,
         location: fd.location,
@@ -145,7 +145,7 @@ export class BusinessFormComponent {
   get name() { return this.businessForm.get('name'); }
   get businessType() { return this.businessForm.get('businessType'); }
   get currency() { return this.businessForm.get('currency'); }
-  get phone() { return this.businessForm.get('phone'); }
+  get phone() { return this.businessForm.get('phone_number'); }
   get workingHours() { return this.businessForm.get('workingHours'); }
   get email() { return this.businessForm.get('email'); }
   get location() { return this.businessForm.get('location'); }
