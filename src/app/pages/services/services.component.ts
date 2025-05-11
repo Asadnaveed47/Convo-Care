@@ -16,6 +16,8 @@ import { environment } from '../../../environments/environment';
 })
 export class ServicesComponent {
   Math = Math;
+  selectedStaff: any = null;
+  staffData: any = null; 
   constructor() {}
 
   private apiService = inject(ApiserviceService);
@@ -46,7 +48,13 @@ export class ServicesComponent {
       }
     });
   }
-
+  openEditStaffModal(staff: any) {
+    this.selectedStaff = staff; // Save the selected staff data
+    this.modalType = 'staff';    // Set modal type to staff for editing
+    this.staffData = this.staffList.find((s: any) => s.id === staff.id); 
+    console.log("staffData", this.staffData);
+    
+  }
   deleteStaff(staffId: number) {
     const url = `${this.baseUrl}/api/v1/business/5/staff/${staffId}`;
     this.apiService.delete(url).subscribe(response => {

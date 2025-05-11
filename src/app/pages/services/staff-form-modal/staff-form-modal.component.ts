@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormsModule } from '@angular/forms';
 import { ApiserviceService } from '../../../services/apiservice/apiservice.service';
 import { environment } from '../../../../environments/environment';
@@ -18,8 +18,8 @@ export class StaffFormModalComponent implements OnInit {
     private baseUrl = environment.baseUrl;
 
     @Input() show = false;
-    @Input() staffToEdit?: Staff;
     @Output() close = new EventEmitter<void>();
+    @Input() staffDataid?: any;
 
     staffForm!: FormGroup;
     timeRanges: { start: string, end: string }[] = [];
@@ -48,21 +48,27 @@ export class StaffFormModalComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.staffToEdit) {
-            this.staffForm.patchValue({
-                name: this.staffToEdit.name,
-                email: this.staffToEdit.email,
-                workingHours: this.staffToEdit.workingHours,
-                max_appointments_per_day: this.staffToEdit.max_appointments_per_day,
-                language: this.staffToEdit.language,
-                phoneNumber: this.staffToEdit.phoneNumber,
-                expertise: this.staffToEdit.expertise,
-                bio: this.staffToEdit.bio,
-                blockTimes: this.staffToEdit.block_times,
-                allocated_services: this.staffToEdit.allocated_services
-            });
-        }
+       
     }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['staffDataid'] && this.staffDataid) {
+    
+          this.staffForm.patchValue({
+            name: this.staffDataid.name,
+            email: this.staffDataid.email,
+            workingHours: this.staffDataid.workingHours,
+            max_appointments_per_day: this.staffDataid.max_appointments_per_day,
+            language: this.staffDataid.language,
+            phoneNumber: this.staffDataid.phoneNumber,
+            expertise: this.staffDataid.expertise,
+            bio: this.staffDataid.bio,
+            blockTimes: this.staffDataid.block_times,
+            allocated_services: this.staffDataid.allocated_services
+          });
+        }
+      }
+    
 
     createServiceGroup(): FormGroup {
         return this.fb.group({
@@ -95,12 +101,10 @@ export class StaffFormModalComponent implements OnInit {
     createStaff(url: string, payload: Staff): void {
         this.apiService.create(url, payload).subscribe({
             next: (resp) => {
-                console.log('Staff created:', resp);
                 this.staffForm.reset();
                 this.closeModal();
             },
             error: (err) => {
-                console.error('Error creating staff:', err);
             }
         });
     }
@@ -108,12 +112,10 @@ export class StaffFormModalComponent implements OnInit {
     updateStaff(url: string, payload: Staff): void {
         this.apiService.edit(url, payload).subscribe({
             next: (resp) => {
-                console.log('Staff updated:', resp);
                 this.staffForm.reset();
                 this.closeModal();
             },
             error: (err) => {
-                console.error('Error updating staff:', err);
             }
         });
     }
@@ -129,8 +131,6 @@ export class StaffFormModalComponent implements OnInit {
         }
 
         const formValue = this.staffForm.value;
-        console.log("formValue.blockTimes", formValue.blockTimes);
-        console.log("workingHours", formValue.workingHours);
 
         const workingHours = formValue.workingHours.map((wh: any) => ({
             day: wh.day.toLowerCase(),
@@ -166,10 +166,8 @@ export class StaffFormModalComponent implements OnInit {
             allocated_services: allocatedServices
         };
 
-        console.log(payload);
-
-        if (this.staffToEdit?.id) {
-            const url = `${this.baseUrl}/api/v1/business/5/staff/${this.staffToEdit.id}`;
+        if (this.staffDataid?.id) {
+            const url = `${this.baseUrl}/api/v1/business/5/staff/${this.staffDataid.id}`;
             this.updateStaff(url, payload);
         } else {
             const url = `${this.baseUrl}/api/v1/business/5/staff`;

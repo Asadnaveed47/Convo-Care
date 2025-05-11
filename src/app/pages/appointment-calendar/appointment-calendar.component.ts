@@ -140,7 +140,5 @@ export class AppointmentCalendarComponent {
         this.showModal = false;
     }
 
-    handleBookingAdded(newStaff: any) {
-        console.log('New Booking added:', newStaff);
-    }
+ 
 }

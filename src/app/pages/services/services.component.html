@@ -25,7 +25,6 @@
       <table class="w-full border-collapse text-left mt-4">
         <thead>
           <tr class="bg-[#EDF4FC] text-[#271E4A] text-center">
-            <th class="p-2">#</th>
             <th class="p-2 font-semibold w-48">Name</th>
             <th class="p-2 font-semibold">Expertise</th>
             <th class="p-2 font-semibold">Allocated Services</th>
@@ -36,7 +35,6 @@
         </thead>
         <tbody class="text-center text-sm font-semibold text-[#271E4A]">
           <tr *ngFor="let staff of staffList.slice((currentPageStaff - 1) * itemsPerPageStaff, currentPageStaff * itemsPerPageStaff)" class="border-b border-[#E0E9F4]">
-            <td class="text-[#0998FF] py-3 px-1">{{ staff.id }}</td>
             <td class="py-3 px-1">{{ staff.name }}</td>
             <td class="py-3 px-1">{{ staff.bio }}</td>
             <td class="py-3 px-1">
@@ -51,7 +49,9 @@
             <td class="py-3 px-1 w-32">12.05.2025</td>
             <td class="py-3 px-1">
               <div class="flex flex-row justify-center items-center gap-2">
-                <button class="shadow-xl rounded-lg p-2"><img [src]="'assets/icons/edit.png'" class="w-4 h-auto" /></button>
+                <button (click)="openEditStaffModal(staff)" class="shadow-xl rounded-lg p-2">
+                  <img [src]="'assets/icons/edit.png'" class="w-4 h-auto" />
+                </button>
                 <button (click)="deleteStaff(staff.id)" class="shadow-xl rounded-lg p-2"><img [src]="'assets/icons/delete.png'" class="w-4 h-auto" /></button>
               </div>
             </td>
@@ -145,6 +145,9 @@
     </div>
   </div>
   
-  <app-staff-form-modal [show]="modalType === 'staff'" (close)="closeModal()"></app-staff-form-modal>
+  <app-staff-form-modal
+   [show]="modalType === 'staff'"
+   [staffDataid]="staffData"
+    (close)="closeModal()"></app-staff-form-modal>
   <app-service-form-modal [show]="modalType === 'service'" (close)="closeModal()"></app-service-form-modal>
   

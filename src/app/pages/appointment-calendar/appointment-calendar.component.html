@@ -87,6 +87,5 @@
 <app-booking-form
   *ngIf="showModal"
   [appointmentData]="selectedAppointment"
-  (modalClosed)="closeModal()"
-  (staffAdded)="handleBookingAdded($event)">
+  (modalClosed)="closeModal()">
 </app-booking-form>
