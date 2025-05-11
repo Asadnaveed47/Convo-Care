@@ -61,7 +61,7 @@
 
                     <div class="flex flex-row gap-8 w-full">
                         <div class="relative w-full">
-                            <input id="phone" type="text" formControlName="phone" placeholder=" "
+                            <input id="phone" type="text" formControlName="phone_number" placeholder=" "
                                 class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
                                 [ngClass]="{'border-red-500': phone?.invalid && (phone?.dirty || phone?.touched)}" />
                             <label for="phone"
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="relative w-full">
-                        <input id="location" type="text" formControlName="location" placeholder=" "
+                        <input id="location" type="text" formControlName="address" placeholder=" "
                             class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
                             [ngClass]="{'border-red-500': location?.invalid && (location?.dirty || location?.touched)}" />
                         <label for="location"
