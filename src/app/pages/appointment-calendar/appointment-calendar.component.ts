@@ -65,21 +65,36 @@ export class AppointmentCalendarComponent {
       
             // Convert to FullCalendar events
             const events = this.listData.map((appointment: any) => ({
-              id: appointment.id.toString(),
-              title: `${appointment.service_name} - ${appointment.staff_name}`,
-              start: appointment.start_time,
-              end: appointment.end_time,
-              extendedProps: {
-                notes: appointment.notes,
-                appointment_status: appointment.appointment_status,
-                business_name: appointment.business_name
-              }
-            }));
+                id: appointment.id.toString(),
+                title: `${appointment.service_name} - ${appointment.staff_name}`,
+                start: appointment.start_time,
+                end: appointment.end_time,
+                className: this.getStatusClass(appointment.appointment_status), // <-- add this
+                extendedProps: {
+                  notes: appointment.notes,
+                  appointment_status: appointment.appointment_status,
+                  business_name: appointment.business_name
+                }
+              }));
+              
       
             this.calendarOptions.events = events;
           }
         });
       }
+      getStatusClass(status: string): string {
+        switch (status.toLowerCase()) {
+          case 'confirmed':
+            return 'event-confirmed';
+          case 'cancelled':
+            return 'event-cancelled';
+          case 'pending':
+            return 'event-pending';
+          default:
+            return 'event-default';
+        }
+      }
+      
       
       addBooking() {
           this.showModal = true;

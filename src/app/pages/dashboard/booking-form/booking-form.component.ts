@@ -40,13 +40,13 @@ export class BookingFormComponent implements OnInit {
   ngOnInit(): void {
     console.log("appointmentData",this.appointmentData);
     
-    if (this.appointmentData) {
+    if (!!this.appointmentData) {
       this.bookingForm.patchValue({
         service: this.appointmentData.service_name,
         staff: this.appointmentData.staff_name,
-        customer_name: this.appointmentData.customer_name,
-        customer_email: this.appointmentData.customer_email,
-        customer_phone: this.appointmentData.customer_phone,
+        customer_name: this.appointmentData.customer?.name || '',
+        customer_email: this.appointmentData.customer?.email || '',
+        customer_phone: this.appointmentData.customer?.phone || '',
         start_time: this.appointmentData.start_time,
         end_time: this.appointmentData.end_time,
         status: this.appointmentData.appointment_status,
