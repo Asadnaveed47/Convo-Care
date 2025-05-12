@@ -72,7 +72,7 @@ export class PieChartComponent implements OnInit, OnChanges {
     pieSeries.slices.template.tooltipText = "{category}: {value}";
   
     // Labels show actual value instead of percentage
-    pieSeries.labels.template.text = "{value}";
+    pieSeries.labels.template.text = "{category}: {value}";
   
     // Optional: animation settings
     pieSeries.hiddenState.properties.opacity = 0;
