@@ -93,7 +93,9 @@ export class BookingFormComponent implements OnInit {
 
   onClose(): void {
     this.modalClosed.emit();
-    console.log("close event emitted");
+    this.bookingForm.reset();
+    this.show.emit();
+    this.bookingToEdit = null;
     
   }
 }
