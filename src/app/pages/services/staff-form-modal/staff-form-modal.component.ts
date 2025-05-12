@@ -38,6 +38,8 @@ export class StaffFormModalComponent implements OnInit {
     daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     selectedDay: string = '';
 
+    errorMessage: string = '';
+
     constructor(private fb: FormBuilder) {
         this.staffForm = this.fb.group({
             name: ['', [Validators.required]],
@@ -48,7 +50,7 @@ export class StaffFormModalComponent implements OnInit {
             phoneNumber: ['', [Validators.required]],
             expertise: [[], [Validators.required]],
             bio: ['', [Validators.required]],
-            blockTimes: ['', [Validators.required]],
+            blockTimes: [[], [Validators.required]],
             allocated_services: this.fb.array([this.createServiceGroup()])
         });
 
@@ -56,49 +58,48 @@ export class StaffFormModalComponent implements OnInit {
             { id: 1, name: 'X-ray' },
             { id: 2, name: 'Consultation' }
         ];
-    
+
         this.languages = [
             { id: 1, name: 'English' },
             { id: 2, name: 'Urdu' },
             { id: 3, name: 'Spanish' },
         ];
-    
+
         this.services = [
             { id: 1, name: 'Generic Consultation' },
             { id: 2, name: 'Daily Consultation' },
             { id: 3, name: 'Generic Consultation' }
         ];
-    
+
     }
 
     ngOnInit(): void {
-       
+
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['staffDataid'] && this.staffDataid) {
-    
-          this.staffForm.patchValue({
-            name: this.staffDataid.name,
-            email: this.staffDataid.email,
-            workingHours: this.staffDataid.workingHours,
-            max_appointments_per_day: this.staffDataid.max_appointments_per_day,
-            language: this.staffDataid.language,
-            phoneNumber: this.staffDataid.phoneNumber,
-            expertise: this.staffDataid.expertise,
-            bio: this.staffDataid.bio,
-            blockTimes: this.staffDataid.block_times,
-            allocated_services: this.staffDataid.allocated_services
-          });
+            this.staffForm.patchValue({
+                name: this.staffDataid.name,
+                email: this.staffDataid.email,
+                workingHours: this.staffDataid.workingHours,
+                max_appointments_per_day: this.staffDataid.max_appointments_per_day,
+                language: this.staffDataid.language,
+                phoneNumber: this.staffDataid.phoneNumber,
+                expertise: this.staffDataid.expertise,
+                bio: this.staffDataid.bio,
+                blockTimes: this.staffDataid.block_times,
+                allocated_services: this.staffDataid.allocated_services
+            });
         }
-      }
-    
+    }
+
 
     createServiceGroup(): FormGroup {
         return this.fb.group({
-            service: [''],
-            duration_minutes: [''],
-            price: ['']
+            service: ['', [Validators.required]],
+            duration_minutes: ['', [Validators.required]],
+            price: ['', [Validators.required]]
         });
     }
 
@@ -129,6 +130,7 @@ export class StaffFormModalComponent implements OnInit {
                 this.closeModal();
             },
             error: (err) => {
+                console.error('Create staff error:', err.error || err);
             }
         });
     }
@@ -149,6 +151,7 @@ export class StaffFormModalComponent implements OnInit {
     }
 
     onSubmit() {
+        console.log("Form values:", this.staffForm.value);
         if (!this.staffForm.valid) {
             this.markFormGroupTouched(this.staffForm);
             return;
@@ -163,17 +166,13 @@ export class StaffFormModalComponent implements OnInit {
         }));
 
         const blockTimes = formValue.blockTimes.map((bt: any) => ({
-            date: bt.date,
+            day: bt.day,
             start_time: bt.start,
-            end_time: bt.end,
-            reason: bt.reason
+            end_time: bt.end
         }));
 
         const allocatedServices = formValue.allocated_services.map((service: any) => ({
-            id: service.id,
-            service_id: service.service_id,
-            service_name: service.service_name,
-            service_description: service.service_description,
+            service_id: service.service,
             price: service.price,
             duration_minutes: service.duration_minutes
         }));
@@ -184,16 +183,19 @@ export class StaffFormModalComponent implements OnInit {
             phone_number: formValue.phoneNumber,
             bio: formValue.bio,
             working_hours: workingHours,
-            holidays: formValue.holidays,
+            holidays: formValue.holidays ?? [],
             block_times: blockTimes,
             max_appointments_per_day: formValue.max_appointments_per_day,
-            allocated_services: allocatedServices
+            allocated_services: allocatedServices,
+            language: formValue.language,
+            expertise: formValue.expertise
         };
 
         if (this.staffDataid?.id) {
             const url = `${this.baseUrl}/api/v1/business/5/staff/${this.staffDataid.id}`;
             this.updateStaff(url, payload);
         } else {
+            console.log(payload);
             const url = `${this.baseUrl}/api/v1/business/5/staff`;
             this.createStaff(url, payload);
         }
@@ -216,7 +218,11 @@ export class StaffFormModalComponent implements OnInit {
     addTimeRange() {
         if (!this.selectedDay || !this.newStartTime || !this.newEndTime) return;
 
-        const range = { day: this.selectedDay, start: this.newStartTime, end: this.newEndTime };
+        const range = {
+            day: this.selectedDay,
+            start: this.newStartTime,
+            end: this.newEndTime
+        };
 
         if (this.currentField === 'workingHours') {
             this.timeRanges.push(range);

@@ -20,6 +20,7 @@ export class ServiceFormModalComponent implements OnInit {
 
   serviceForm: FormGroup;
   private baseUrl = environment.baseUrl;
+  errorMessage: string = '';
 
   categories = [
     { id: 1, name: 'Daily Consultation' },
@@ -65,10 +66,10 @@ export class ServiceFormModalComponent implements OnInit {
     };
 
     if (this.serviceToEdit?.id) {
-      const url = `${this.baseUrl}/api/v1/business/5/service/${this.serviceToEdit.id}`;
+      const url = `${this.baseUrl}/api/v1/business/5/services/${this.serviceToEdit.id}`;
       this.updateService(url, payload);
     } else {
-      const url = `${this.baseUrl}/api/v1/business/5/service`;
+      const url = `${this.baseUrl}/api/v1/business/5/services`;
       this.createService(url, payload);
     }
   }
@@ -82,6 +83,7 @@ export class ServiceFormModalComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error creating service:', err);
+        this.errorMessage = err?.error?.message;
       }
     });
   }
@@ -95,6 +97,7 @@ export class ServiceFormModalComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error updating service:', err);
+        this.errorMessage = err?.error?.message;
       }
     });
   }
