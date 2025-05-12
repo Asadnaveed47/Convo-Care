@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, runInInjectionContext, inject, Injector } from '@angular/core';
 import { BookingFormComponent } from "./booking-form/booking-form.component";
 import { CommonModule } from '@angular/common';
 import { ColumnRotatedComponent } from "../../shared/column-rotated/column-rotated.component";
 import { PieChartComponent } from "../../shared/pie-chart/pie-chart.component";
 import { ApiserviceService } from '../../services/apiservice/apiservice.service';
 import { environment } from '../../../environments/environment';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 
 @Component({
     selector: 'app-dashboard',
@@ -13,7 +14,7 @@ import { environment } from '../../../environments/environment';
     styleUrl: './dashboard.component.css',
     standalone: true,
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
     showModal = false;
     cardDataMap: any = {};
@@ -21,13 +22,17 @@ export class DashboardComponent {
     servicesBookedData: any[] = [];
     patientInsightsData: any;
 
+    private injector = inject(Injector);
+
     constructor(
         private apiService: ApiserviceService,
+        private fdb: AngularFireDatabase,
     ) { }
 
     ngOnInit() {
         this.getCards();
         this.getgraphs();
+        this.getFirebaseData();
     }
 
     getCards() {
@@ -45,18 +50,18 @@ export class DashboardComponent {
     getgraphs() {
         const url = `${environment.baseUrl}/api/v1/analytics/graphs?dashboard_id=MD&business_id=5`;
         this.apiService.get(url).subscribe(response => {
-          if (response.status === 1000) {
-            const servicesBooked = response.data.find((item: { code: string; data: any }) => item.code === 'SB');
-            const patientInsights = response.data.find((item: { code: string; data: any }) => item.code === 'PI');
-      
-            this.servicesBookedData = servicesBooked?.data || [];
-            this.patientInsightsData = patientInsights?.data || {};
-            console.log("patientInsightsData",this.patientInsightsData);
-            
-          }
+            if (response.status === 1000) {
+                const servicesBooked = response.data.find((item: { code: string; data: any }) => item.code === 'SB');
+                const patientInsights = response.data.find((item: { code: string; data: any }) => item.code === 'PI');
+
+                this.servicesBookedData = servicesBooked?.data || [];
+                this.patientInsightsData = patientInsights?.data || {};
+                console.log("patientInsightsData", this.patientInsightsData);
+
+            }
         });
-      }
-      
+    }
+
 
     addBooking() {
         this.showModal = true;
@@ -70,5 +75,13 @@ export class DashboardComponent {
 
     handleBookingAdded(newStaff: any) {
         console.log('New Booking added:', newStaff);
+    }
+
+    getFirebaseData() {
+        runInInjectionContext(this.injector, () => {
+            this.fdb.object(`5`).valueChanges().subscribe((item) => {
+                console.log(item);
+            });
+        });
     }
 }
