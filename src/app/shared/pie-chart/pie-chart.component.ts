@@ -45,16 +45,12 @@ export class PieChartComponent implements OnInit, OnChanges {
     // Set up chart data
     this.chartData = [];
   
-    if (newPatients === 0 && repeatPatients === 0) {
-      this.showNoGraphImage = true; 
-      this.chartData = [
-      ];
-    } else {
+   
       this.chartData = [
         { sector: "New Patient", size: newPatients },
         { sector: "Repeat Patient", size: repeatPatients }
       ];
-    }
+    
   
     // Assign data to chart
     chart.data = this.chartData;
