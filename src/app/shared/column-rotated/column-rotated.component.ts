@@ -26,9 +26,23 @@ export class ColumnRotatedComponent {
 
   ngOnInit() {
     this.generateChart(this.chartOptions);
+    // Map chartData to the required format
+  
+    console.log("chartData", this.chartData);
   }
   ngOnChanges() {
-    this.generateChart(this.chartOptions);
+    console.log("chartData", this.chartData);
+      this.chartData = this.chartData.map(data => ({
+      country: data.service__name,
+      visits: data.count
+    }));
+    this.browserOnly(() => {
+      if (this.chart) {
+        this.chart.data = this.chartData;
+      } else {
+        this.generateChart(this.chartOptions);
+      }
+    });
   }
   generateChart(chartOptions: any) {
     this.browserOnly(() => {
@@ -40,27 +54,27 @@ export class ColumnRotatedComponent {
       am4core.useTheme(am4themes_animated);
       this.chart = am4core.create("chart", am4charts.XYChart);
       this.chart.scrollbarX = new am4core.Scrollbar();
-
+      this.chart.data = this.chartData;
       // Add data
-      this.chart.data = [{
-        "country": "Consultancy",
-        "visits": 10
-      }, {
-        "country": "Therapy",
-        "visits": 7
-      }, {
-        "country": "X-ray",
-        "visits": 46
-      }, {
-        "country": "Ultrasound",
-        "visits": 34
-      }, {
-        "country": "Endoscopy",
-        "visits": 5
-      }, {
-        "country": "CT Scan",
-        "visits": 3
-      }];
+      // this.chart.data = [{
+      //   "country": "Consultancy",
+      //   "visits": 10
+      // }, {
+      //   "country": "Therapy",
+      //   "visits": 7
+      // }, {
+      //   "country": "X-ray",
+      //   "visits": 46
+      // }, {
+      //   "country": "Ultrasound",
+      //   "visits": 34
+      // }, {
+      //   "country": "Endoscopy",
+      //   "visits": 5
+      // }, {
+      //   "country": "CT Scan",
+      //   "visits": 3
+      // }];
 
       // Create axes
       let categoryAxis = this.chart.xAxes.push(new am4charts.CategoryAxis());
@@ -70,6 +84,7 @@ export class ColumnRotatedComponent {
       categoryAxis.renderer.labels.template.horizontalCenter = "right";
       categoryAxis.renderer.labels.template.verticalCenter = "middle";
       categoryAxis.renderer.labels.template.rotation = 270;
+      categoryAxis.renderer.labels.template.fontSize = 10;
       categoryAxis.renderer.minHeight = 110;
 
       let valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
