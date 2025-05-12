@@ -63,11 +63,11 @@ export class BookingFormComponent implements OnInit {
   
     const payload = this.bookingForm.value;
     const businessId = 5;
-    const url = this.bookingToEdit?.id
-      ? `${this.baseUrl}/api/v1/business/${businessId}/appointments/${this.bookingToEdit.id}`
-      : `${this.baseUrl}/api/v1/business/${businessId}/appointments`;
+    const url = this.appointmentData?.id
+      ? `${this.baseUrl}/api/v1/business/${businessId}/appointment/${this.appointmentData.id}`
+      : `${this.baseUrl}/api/v1/business/${businessId}/appointment`;
   
-    const request$ = this.bookingToEdit?.id
+    const request$ = this.appointmentData?.id
       ? this.apiService.edit(url, payload)
       : this.apiService.create(url, payload);
   
