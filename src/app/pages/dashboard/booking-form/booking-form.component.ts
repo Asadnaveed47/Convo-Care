@@ -3,11 +3,12 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 import { ApiserviceService } from '../../../services/apiservice/apiservice.service';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-booking-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, CalendarModule],
   templateUrl: './booking-form.component.html',
   styleUrl: './booking-form.component.css'
 })
@@ -40,19 +41,20 @@ export class BookingFormComponent implements OnInit {
   ngOnInit(): void {
     console.log("appointmentData",this.appointmentData);
     
-    if (!!this.appointmentData) {
-      this.bookingForm.patchValue({
-        service: this.appointmentData.service_name,
-        staff: this.appointmentData.staff_name,
-        customer_name: this.appointmentData.customer?.name || '',
-        customer_email: this.appointmentData.customer?.email || '',
-        customer_phone: this.appointmentData.customer?.phone || '',
-        start_time: this.appointmentData.start_time,
-        end_time: this.appointmentData.end_time,
-        status: this.appointmentData.appointment_status,
-        notes: this.appointmentData.notes
-      });
-    }
+  if (!!this.appointmentData) {
+  this.bookingForm.patchValue({
+    service: this.appointmentData.service_name,
+    staff: this.appointmentData.staff_name,
+    customer_name: this.appointmentData.customer?.name || '',
+    customer_email: this.appointmentData.customer?.email || '',
+    customer_phone: this.appointmentData.customer?.phone || '',
+    start_time: this.appointmentData.start_time ? new Date(this.appointmentData.start_time) : null,
+    end_time: this.appointmentData.end_time ? new Date(this.appointmentData.end_time) : null,
+    status: this.appointmentData.appointment_status,
+    notes: this.appointmentData.notes
+  });
+}
+
   }
 
   onSubmit(): void {

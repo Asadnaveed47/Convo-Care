@@ -101,13 +101,12 @@
                             </div>
                         </div>
 
-                        <div class="relative w-full max-w-sm flex-1">
-                            <input id="starttime" type="text" placeholder=" "
-                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
-                                formControlName="start_time" />
-                            <label for="starttime"
-                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Start
-                                Time</label>
+                        <!-- START TIME -->
+                        <div class="relative w-full max-w-sm flex-1 mt-3">
+                            <p-calendar id="starttime" formControlName="start_time" dateFormat="yy-mm-dd"
+                                [showTime]="true" hourFormat="24" placeholder="Start Time" [showIcon]="true"
+                                inputId="start-time-input" styleClass="custom-calendar w-full"></p-calendar>
+
                             <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
                                 <span
                                     *ngIf="bookingForm.get('start_time')?.touched && bookingForm.get('start_time')?.hasError('required')">
@@ -116,13 +115,12 @@
                             </div>
                         </div>
 
-                        <div class="relative w-full max-w-sm flex-1">
-                            <input id="endtime" type="text" placeholder=" "
-                                class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
-                                formControlName="end_time" />
-                            <label for="endtime"
-                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">End
-                                Time</label>
+                        <!-- END TIME -->
+                        <div class="relative w-full max-w-sm flex-1 mt-3">
+                            <p-calendar id="endtime" formControlName="end_time" dateFormat="yy-mm-dd" [showTime]="true"
+                                hourFormat="24" placeholder="End Time" [showIcon]="true" inputId="end-time-input"
+                                styleClass="custom-calendar w-full"></p-calendar>
+
                             <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
                                 <span
                                     *ngIf="bookingForm.get('end_time')?.touched && bookingForm.get('end_time')?.hasError('required')">
@@ -130,6 +128,8 @@
                                 </span>
                             </div>
                         </div>
+
+
 
                         <!-- <div class="relative w-full max-w-sm flex-1">
                             <input id="status" type="text" placeholder=" "
