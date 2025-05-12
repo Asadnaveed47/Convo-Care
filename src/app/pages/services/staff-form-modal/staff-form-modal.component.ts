@@ -166,18 +166,19 @@ export class StaffFormModalComponent implements OnInit {
         }));
 
         const blockTimes = formValue.blockTimes.map((bt: any) => ({
-            day: bt.day,
+            date: bt.day,
             start_time: bt.start,
             end_time: bt.end
         }));
 
         const allocatedServices = formValue.allocated_services.map((service: any) => ({
-            service_id: service.service,
+            service: service.service,
             price: service.price,
             duration_minutes: service.duration_minutes
         }));
 
         const payload: any = {
+            full_name: formValue.name,
             name: formValue.name,
             email: formValue.email,
             phone_number: formValue.phoneNumber,

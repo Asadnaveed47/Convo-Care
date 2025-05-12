@@ -185,7 +185,8 @@
                     <div class="flex flex-col justify-center items-start w-full">
                         <div class="flex flex-row gap-3 items-center">
                             <h2 class="text-xl font-bold text-[#271E4A]">Allocate Services</h2>
-                            <button type="button" class="cursor-pointer p-3 rounded-full bg-[#4BCB70]"
+                            <button type="button"
+                                class="cursor-pointer p-3 rounded-full bg-[#4BCB70] hover:bg-[#3fb362] transition-colors duration-200"
                                 (click)="addAllocatedService()">
                                 <img [src]="'assets/icons/addservice.png'" alt="Add Service" class="w-3 h-auto">
                             </button>
@@ -242,7 +243,7 @@
                                     </div>
                                     <div class="w-10">
                                         <button type="button"
-                                            class="mt-5 cursor-pointer p-2 rounded-full bg-[#FF4F4F] inline-flex items-center justify-center"
+                                            class="mt-5 cursor-pointer p-2 rounded-full bg-[#FF4F4F] hover:bg-[#e04343] transition-colors duration-200 inline-flex items-center justify-center"
                                             (click)="removeService(i)">
                                             <img [src]="'assets/icons/removeservice.png'" alt="Remove Service"
                                                 class="w-5 h-auto">
@@ -255,9 +256,10 @@
 
                     <div class="flex justify-end mt-6">
                         <button type="submit"
-                            class="bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl">
+                            class="bg-[#8879CA] hover:bg-[#6f63b5] transition-colors duration-200 cursor-pointer p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl">
                             Save
                         </button>
+
                     </div>
                 </div>
             </form>
