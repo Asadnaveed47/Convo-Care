@@ -14,12 +14,19 @@
             <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
                 <div class="flex flex-col">
                     <div class="flex flex-wrap gap-6">
+
                         <div class="relative w-full max-w-sm flex-1">
-                            <input id="service" type="text" placeholder=" "
+                            <select id="service"
                                 class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
-                                formControlName="service" />
+                                formControlName="service">
+                                <option *ngFor="let service of serviceList" [value]="service.id">
+                                    {{ service.name }}
+                                </option>
+                            </select>
                             <label for="service"
-                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Service</label>
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">
+                                Service
+                            </label>
                             <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
                                 <span
                                     *ngIf="bookingForm.get('service')?.touched && bookingForm.get('service')?.hasError('required')">
@@ -29,11 +36,17 @@
                         </div>
 
                         <div class="relative w-full max-w-sm flex-1">
-                            <input id="staff" type="text" placeholder=" "
+                            <select id="staff"
                                 class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
-                                formControlName="staff" />
+                                formControlName="staff">
+                                <option *ngFor="let staff of staffList" [value]="staff.id">
+                                    {{ staff.name }}
+                                </option>
+                            </select>
                             <label for="staff"
-                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Staff</label>
+                                class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">
+                                Staff
+                            </label>
                             <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
                                 <span
                                     *ngIf="bookingForm.get('staff')?.touched && bookingForm.get('staff')?.hasError('required')">

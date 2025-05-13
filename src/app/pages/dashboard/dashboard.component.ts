@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
     graphData: any[] = [];
     servicesBookedData: any[] = [];
     patientInsightsData: any;
+    appointmentData: any[] = [];
 
     private injector = inject(Injector);
 
@@ -79,8 +80,8 @@ export class DashboardComponent implements OnInit {
 
     getFirebaseData() {
         runInInjectionContext(this.injector, () => {
-            this.fdb.object(`5`).valueChanges().subscribe((item) => {
-                console.log(item);
+            this.fdb.object(`Upcoming-Appointments/5`).valueChanges().subscribe((item) => {
+                this.appointmentData = item as any[] || [];
             });
         });
     }
