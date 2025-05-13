@@ -74,24 +74,24 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="relative w-full">
 
+                        <div class="relative w-full">
                             <div class="relative w-full">
-                                <select id="working-hours" formControlName="workingHours"
+                                <input id="working-hours" type="text" formControlName="workingHours" placeholder=" "
                                     class="peer w-full border-b border-[#271E4A] bg-transparent pt-6 pb-2 text-sm focus:outline-none"
-                                    [ngClass]="{'border-red-500': workingHours?.invalid && (workingHours?.dirty || workingHours?.touched)}">
-                                    <!-- <option value="" disabled selected>Select a currency</option> -->
-                                    <option *ngFor="let working of workHours" [value]="working.code">
-                                        {{ working.name }}
-                                    </option>
-                                </select>
+                                    [ngClass]="{'border-red-500': workingHours?.invalid && (workingHours?.dirty || workingHours?.touched)}" />
                                 <label for="working-hours"
-                                    class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Working Hours</label>
+                                    class="absolute left-0 top-2 text-xs text-[#271E4A] transition-all duration-200 peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#271E4A]">Working Hours
+                                    </label>
                                 <div *ngIf="workingHours?.invalid && (workingHours?.dirty || workingHours?.touched)"
                                     class="text-red-500 text-xs mt-1">
-                                    <div *ngIf="workingHours?.errors?.['required']">Working hours is required</div>
+                                    <div *ngIf="workingHours?.errors?.['required']">Phone number is required</div>
+                                    <div *ngIf="workingHours?.errors?.['pattern']">Please enter a valid phone number (10-15 digits)
+                                    </div>
                                 </div>
                             </div>
+
+                          
 
 
 
@@ -141,7 +141,7 @@
             <div class="flex justify-end mt-10">
                 <button type="submit"
                     class="bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl"
-                    [disabled]="businessForm.invalid">
+                    >
                     Save
                 </button>
             </div>
