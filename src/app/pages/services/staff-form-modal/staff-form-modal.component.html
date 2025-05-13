@@ -275,11 +275,17 @@
         </h3>
 
         <div class="mb-3">
-            <label class="block text-sm mb-1">Select Day</label>
-            <select [(ngModel)]="selectedDay" class="w-full border px-2 py-1 rounded">
-                <option value="" disabled selected>Select Day</option>
-                <option *ngFor="let day of daysOfWeek" [value]="day">{{ day }}</option>
-            </select>
+            <label class="block text-sm mb-1">{{ currentField === 'workingHours' ? 'Select Day' : 'Select Date'
+                }}</label>
+            <ng-container *ngIf="currentField === 'workingHours'">
+                <select [(ngModel)]="selectedDay" class="w-full border px-2 py-1 rounded">
+                    <option value="" disabled selected>Select Day</option>
+                    <option *ngFor="let day of daysOfWeek" [value]="day">{{ day }}</option>
+                </select>
+            </ng-container>
+            <ng-container *ngIf="currentField === 'blockTimes'">
+                <input type="date" [(ngModel)]="selectedDay" class="w-full border px-2 py-1 rounded" />
+            </ng-container>
         </div>
 
         <div class="mb-3">

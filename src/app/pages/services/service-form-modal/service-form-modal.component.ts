@@ -23,9 +23,11 @@ export class ServiceFormModalComponent implements OnInit {
   errorMessage: string = '';
 
   categories = [
-    { id: 1, name: 'Daily Consultation' },
-    { id: 2, name: 'General Consultation' },
-    { id: 3, name: 'Generic Consultation' }
+    { id: 5, name: 'General Medicine' },
+    { id: 9, name: 'Diagnostics & Lab Testing' },
+    { id: 6, name: 'Pediatrics' },
+    { id: 7, name: 'Gynecology & Womens Health' },
+    { id: 8, name: 'Dermatology' },
   ];
 
   constructor(
@@ -35,8 +37,7 @@ export class ServiceFormModalComponent implements OnInit {
     this.serviceForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       category: [[], Validators.required],
-      description: ['', Validators.required],
-      status: ['active']
+      description: ['', Validators.required]
     });
   }
 
@@ -46,8 +47,9 @@ export class ServiceFormModalComponent implements OnInit {
         name: this.serviceToEdit.name,
         category: this.serviceToEdit.category,
         description: this.serviceToEdit.description,
-        status: this.serviceToEdit.status
       });
+    } else {
+      this.serviceForm.reset();
     }
   }
 
@@ -109,6 +111,7 @@ export class ServiceFormModalComponent implements OnInit {
   }
 
   closeModal(): void {
+    this.serviceForm.reset(); // Reset form when closing
     this.close.emit();
   }
 

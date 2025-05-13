@@ -2,14 +2,14 @@
   <!-- Tabs -->
   <div class="flex flex-row justify-start items-center w-full gap-2">
     <button (click)="activeTab = 'staff'" [ngClass]="{
-        'bg-[#8879CA] text-white': activeTab === 'staff',
-        'bg-[#F0F1F3] text-[#8879CA]': activeTab !== 'staff'
-      }" class="cursor-pointer text-sm rounded-xl px-2.5 py-1.5">Staff</button>
+        'bg-[#8879CA] text-white hover:bg-[#7668b9]': activeTab === 'staff',
+        'bg-[#F0F1F3] text-[#8879CA] hover:bg-[#e4e5e7]': activeTab !== 'staff'
+      }" class="cursor-pointer text-sm rounded-xl px-2.5 py-1.5 transition duration-200">Staff</button>
 
     <button (click)="activeTab = 'service'" [ngClass]="{
-        'bg-[#8879CA] text-white': activeTab === 'service',
-        'bg-[#F0F1F3] text-[#8879CA]': activeTab !== 'service'
-      }" class="cursor-pointer text-sm rounded-xl px-2.5 py-1.5">Services</button>
+        'bg-[#8879CA] text-white hover:bg-[#7668b9]': activeTab === 'service',
+        'bg-[#F0F1F3] text-[#8879CA] hover:bg-[#e4e5e7]': activeTab !== 'service'
+      }" class="cursor-pointer text-sm rounded-xl px-2.5 py-1.5 transition duration-200">Services</button>
   </div>
 
   <!-- STAFF TABLE -->
@@ -17,7 +17,7 @@
     <div class="flex flex-row justify-between items-center w-full">
       <h5 class="text-4xl font-bold text-[#271E4A]">Staff</h5>
       <button (click)="openStaffModal()"
-        class="cursor-pointer flex flex-row justify-center items-center gap-2 bg-[#8879CA] rounded-2xl text-white px-2.5 py-0.5 shadow-xl">
+        class="cursor-pointer flex flex-row justify-center items-center gap-2 bg-[#8879CA] hover:bg-[#7668b9] rounded-2xl text-white px-2.5 py-0.5 shadow-xl transition duration-200">
         <img [src]="'assets/icons/add.png'" class="w-5 h-auto" />
         <span class="text-xs">New Staff</span>
       </button>
@@ -52,10 +52,10 @@
           <td class="py-3 px-1 w-32">12.05.2025</td>
           <td class="py-3 px-1">
             <div class="flex flex-row justify-center items-center gap-2">
-              <button (click)="openEditStaffModal(staff)" class="shadow-xl rounded-lg p-2">
+              <button (click)="openEditStaffModal(staff)" class="shadow-xl rounded-lg p-2 hover:bg-gray-100 transition duration-200">
                 <img [src]="'assets/icons/edit.png'" class="w-4 h-auto" />
               </button>
-              <button (click)="deleteStaff(staff.id)" class="shadow-xl rounded-lg p-2"><img
+              <button (click)="deleteStaff(staff.id)" class="shadow-xl rounded-lg p-2 hover:bg-gray-100 transition duration-200"><img
                   [src]="'assets/icons/delete.png'" class="w-4 h-auto" /></button>
             </div>
           </td>
@@ -66,15 +66,15 @@
     <!-- Staff Pagination -->
     <div class="flex justify-end items-center gap-2 mt-4">
       <button (click)="currentPageStaff = 1" [disabled]="currentPageStaff === 1"
-        class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">«</button>
+        class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-200 disabled:opacity-50 disabled:hover:bg-gray-100 transition duration-200">«</button>
       <button (click)="currentPageStaff = currentPageStaff - 1" [disabled]="currentPageStaff === 1"
         class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">‹</button>
 
       <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
         <button *ngIf="shouldShowPage(i + 1)" (click)="currentPageStaff = i + 1" [ngClass]="{
-            'bg-purple-500 text-white': currentPageStaff === i + 1,
-            'bg-white text-gray-700 hover:bg-gray-100': currentPageStaff !== i + 1
-          }" class="w-8 h-8 rounded-full border border-gray-300 cursor-pointer text-xs">
+            'bg-purple-500 text-white hover:bg-purple-600': currentPageStaff === i + 1,
+            'bg-white text-gray-700 hover:bg-gray-200': currentPageStaff !== i + 1
+          }" class="w-8 h-8 rounded-full border border-gray-300 cursor-pointer text-xs transition duration-200">
           {{ i + 1 }}
         </button>
       </ng-container>
@@ -91,7 +91,7 @@
     <div class="flex flex-row justify-between items-center w-full">
       <h5 class="text-4xl font-bold text-[#271E4A]">Services</h5>
       <button (click)="openServiceModal()"
-        class="cursor-pointer flex flex-row justify-center items-center gap-2 bg-[#8879CA] rounded-2xl text-white px-2.5 py-0.5 shadow-xl">
+        class="cursor-pointer flex flex-row justify-center items-center gap-2 bg-[#8879CA] hover:bg-[#7668b9] rounded-2xl text-white px-2.5 py-0.5 shadow-xl transition duration-200">
         <img [src]="'assets/icons/add.png'" class="w-5 h-auto" />
         <span class="text-xs">New Service</span>
       </button>
@@ -128,10 +128,13 @@
           </td>
           <td class="py-3 px-1">
             <div class="flex flex-row justify-center items-center gap-2">
-              <button class="shadow-xl rounded-lg p-2"><img [src]="'assets/icons/edit.png'"
-                  class="w-4 h-auto" /></button>
-              <button class="shadow-xl rounded-lg p-2"><img [src]="'assets/icons/delete.png'"
-                  class="w-4 h-auto" /></button>
+              <button (click)="openEditServiceModal(services)" 
+                class="shadow-xl rounded-lg p-2 hover:bg-gray-100 transition duration-200">
+                <img [src]="'assets/icons/edit.png'" class="w-4 h-auto" />
+              </button>
+              <button class="shadow-xl rounded-lg p-2 hover:bg-gray-100 transition duration-200">
+                <img [src]="'assets/icons/delete.png'" class="w-4 h-auto" />
+              </button>
             </div>
           </td>
         </tr>
@@ -141,15 +144,15 @@
     <!-- Services Pagination -->
     <div class="flex justify-end items-center gap-2 mt-4">
       <button (click)="currentPageService = 1" [disabled]="currentPageService === 1"
-        class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">«</button>
+        class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-200 disabled:opacity-50 disabled:hover:bg-gray-100 transition duration-200">«</button>
       <button (click)="currentPageService = currentPageService - 1" [disabled]="currentPageService === 1"
         class="px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100">‹</button>
 
       <ng-container *ngFor="let page of [].constructor(totalServicePages); let i = index">
         <button *ngIf="shouldShowServicePage(i + 1)" (click)="currentPageService = i + 1" [ngClass]="{
-            'bg-purple-500 text-white': currentPageService === i + 1,
-            'bg-white text-gray-700 hover:bg-gray-100': currentPageService !== i + 1
-          }" class="w-8 h-8 rounded-full border border-gray-300 cursor-pointer text-xs">
+            'bg-purple-500 text-white hover:bg-purple-600': currentPageService === i + 1,
+            'bg-white text-gray-700 hover:bg-gray-200': currentPageService !== i + 1
+          }" class="w-8 h-8 rounded-full border border-gray-300 cursor-pointer text-xs transition duration-200">
           {{ i + 1 }}
         </button>
       </ng-container>
@@ -164,4 +167,8 @@
 
 <app-staff-form-modal [show]="modalType === 'staff'" [staffDataid]="staffData"
   (close)="closeModal()"></app-staff-form-modal>
-<app-service-form-modal [show]="modalType === 'service'" (close)="closeModal()"></app-service-form-modal>
+<app-service-form-modal 
+  [show]="modalType === 'service'" 
+  [serviceToEdit]="serviceToEdit"
+  (close)="closeModal()">
+</app-service-form-modal>

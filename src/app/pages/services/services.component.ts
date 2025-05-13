@@ -18,6 +18,7 @@ export class ServicesComponent {
   Math = Math;
   selectedStaff: any = null;
   staffData: any = null; 
+  serviceToEdit?: Services; 
   constructor() {}
 
   private apiService = inject(ApiserviceService);
@@ -49,11 +50,14 @@ export class ServicesComponent {
     });
   }
   openEditStaffModal(staff: any) {
-    this.selectedStaff = staff; // Save the selected staff data
-    this.modalType = 'staff';    // Set modal type to staff for editing
-    this.staffData = this.staffList.find((s: any) => s.id === staff.id); 
-    console.log("staffData", this.staffData);
-    
+    this.staffData = {...staff}; // Create a copy of staff data
+    this.modalType = 'staff';
+    console.log("staffData for edit", this.staffData);
+  }
+  openEditServiceModal(service: Services) {
+    this.serviceToEdit = {...service};
+    this.modalType = 'service';
+    console.log("serviceToEdit for edit", this.serviceToEdit);
   }
   deleteStaff(staffId: number) {
     const url = `${this.baseUrl}/api/v1/business/5/staff/${staffId}`;
@@ -69,15 +73,23 @@ export class ServicesComponent {
   modalType: 'staff' | 'service' | null = null;
 
   openStaffModal() {
+    this.staffData = null; // Reset staff data for new form
     this.modalType = 'staff';
+    this.loadStaff(); // Refresh the list
   }
 
   openServiceModal() {
+    this.serviceToEdit = undefined; // Changed from null to undefined
     this.modalType = 'service';
+    this.loadServices(); // Refresh the list
   }
 
   closeModal() {
     this.modalType = null;
+    this.staffData = null; // Reset staff data when closing
+    this.serviceToEdit = undefined; // Changed from null to undefined
+    this.loadStaff(); // Refresh the list after closing
+    this.loadServices(); // Refresh services list after closing
   }
 
   // Pagination - Staff

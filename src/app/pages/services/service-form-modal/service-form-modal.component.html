@@ -35,7 +35,6 @@
                     <div class="relative w-full select">
                         <ng-select [items]="categories" bindLabel="name" bindValue="id" placeholder=" "
                             formControlName="category"
-                            [multiple]="true"
                             class="category-select peer text-sm w-full border-[#271E4A] bg-transparent"
                             [ngClass]="{'ng-invalid': serviceForm.get('category')?.touched && serviceForm.get('category')?.invalid}">
                         </ng-select>
@@ -50,39 +49,6 @@
                         </div>
                     </div>
 
-
-                    <div class="flex flex-col w-full" *ngIf="serviceToEdit">
-                        <label class="text-sm text-[#271E4A] mb-1">Status</label>
-                        <div class="border border-gray-400 rounded-lg p-0.5 w-fit">
-                          <div class="flex gap-1">
-                            <button type="button"
-                              class="cursor-pointer rounded-lg px-5 text-xs py-1"
-                              [ngClass]="{
-                                'bg-[#8879CA] text-white': serviceForm.get('status')?.value === 'active',
-                                'text-[#271E4ACC]': serviceForm.get('status')?.value !== 'active'
-                              }"
-                              (click)="serviceForm.get('status')?.setValue('active')">
-                              Active
-                            </button>
-                            <button type="button"
-                              class="cursor-pointer rounded-lg px-5 text-xs py-1"
-                              [ngClass]="{
-                                'bg-[#8879CA] text-white': serviceForm.get('status')?.value === 'inactive',
-                                'text-[#271E4ACC]': serviceForm.get('status')?.value !== 'inactive'
-                              }"
-                              (click)="serviceForm.get('status')?.setValue('inactive')">
-                              Inactive
-                            </button>
-                          </div>
-                        </div>
-                        <div class="text-red-500 text-xs mt-1 min-h-[1.5rem]">
-                          <span
-                            *ngIf="serviceForm.get('status')?.touched && serviceForm.get('status')?.hasError('required')">
-                            Status is required
-                          </span>
-                        </div>
-                      </div>
-                      
                 </div>
 
                 <div class="relative w-full">
@@ -103,7 +69,7 @@
 
                 <div class="flex justify-end">
                     <button
-                        class="cursor-pointer bg-[#8879CA] p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl"
+                        class="cursor-pointer bg-[#8879CA] hover:bg-[#6f63b5] transition-colors duration-200 p-2 text-xs rounded-xl text-white font-bold max-w-28 w-full shadow-xl"
                         type="submit">
                         Save
                     </button>
