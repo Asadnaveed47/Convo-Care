@@ -64,12 +64,15 @@ export class BusinessFormComponent {
   }
 
   ngOnInit() {
+    console.log(this.data);
     document.body.style.overflow = 'hidden';
     this.getBusinessData();
   }
   onSubmit() {
     // this.loading = true;
-
+    console.log("this.businessForm", this.businessForm);
+    this.markFormGroupTouched(this.businessForm);
+    
     const fd = this.businessForm.value;
     if (!this.businessForm.valid) {
         return;
@@ -84,6 +87,8 @@ export class BusinessFormComponent {
         location: fd.location,
     }
 
+    console.log("this.data", this.data);
+    console.log("payload", payload);
     
 
     if (this.data && this.data.id) {
@@ -127,6 +132,7 @@ export class BusinessFormComponent {
     let url = new URL(`${environment.baseUrl}/api/v1/business/5`);
     this.apiService.get(url.href).subscribe((resp: any) => {
       this.BusinessData = resp.data;
+      this.data = resp.data;
       this.businessForm.patchValue(this.BusinessData);
     }, (err: any) => {
       console.error('Error fetching business data:', err);

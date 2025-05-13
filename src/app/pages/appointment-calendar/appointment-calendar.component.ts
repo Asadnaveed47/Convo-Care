@@ -138,6 +138,8 @@ export class AppointmentCalendarComponent {
 
     closeModal() {
         this.showModal = false;
+        this.selectedAppointment = null; // Reset selected appointment
+        this.getAllAppointments(); // Refresh the appointments list
     }
 
  
